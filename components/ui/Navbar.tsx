@@ -27,7 +27,7 @@ export const Navbar = () => {
         <NavLink key={link.href} path={path} {...link} />
       ))}
       <button className="flex items-center px-3 py-2 xs:hidden">
-        <span className="icon-[solar--user-circle-linear] text-3xl" />
+        <span className="icon-[solar--user-circle-linear] max-[380px]:text-2xl text-3xl" />
       </button>
     </div>
   );
@@ -43,7 +43,7 @@ const NavLink = ({ href, icon, label, path }: Link & { path: string }) => {
     >
       <span
         className={cn(
-          'text-3xl xs:text-2xl transition-colors group-hover:text-accent',
+          'max-[380px]:text-2xl text-3xl xs:text-2xl transition-colors group-hover:text-accent',
           isActive && 'text-accent',
           icon
         )}
