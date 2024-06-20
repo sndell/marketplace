@@ -4,6 +4,7 @@ import { cn } from '@/util/cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { ProfileButton } from '../../features/auth';
 
 type Link = {
   href: string;
@@ -26,9 +27,7 @@ export const Navbar = () => {
       {links.map((link) => (
         <NavLink key={link.href} path={path} {...link} />
       ))}
-      <button className="flex items-center px-3 py-2 xs:hidden">
-        <span className="icon-[solar--user-circle-linear] max-[380px]:text-2xl text-3xl" />
-      </button>
+      <ProfileButton mode="mobile" />
     </div>
   );
 };
