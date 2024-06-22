@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 
 const filters: string[] = ['Elektronik', 'Datorer', 'Stockholm', 'Södertälje', '500kr - 2700kr'];
@@ -40,7 +42,7 @@ export const FilterButton = () => {
         <span className="icon-[solar--magnifer-linear]" />
       </div>
       <div className="flex flex-col items-start">
-        Allting
+        <div>Allting</div>
         <div className="flex items-center gap-2 text-sm text-primaryLight whitespace-nowrap">
           {visibleFilters.map((tag, index) => (
             <React.Fragment key={index}>
