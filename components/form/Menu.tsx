@@ -13,6 +13,7 @@ type Props = {
   isDisabled?: boolean;
   placeholder?: string;
   name: string;
+  maxHeight?: number;
   options: {
     label: string;
     value: string;
@@ -29,6 +30,7 @@ export const Menu = ({
   label,
   placeholder,
   control,
+  maxHeight,
 }: Props) => {
   const {
     field: { onChange, value },
@@ -83,10 +85,13 @@ export const Menu = ({
           {isMenuOpen && (
             <motion.div
               initial={{ height: 0 }}
-              animate={{ height: 'auto' }}
+              animate={{ maxHeight, height: 'auto' }}
               exit={{ height: 0 }}
               transition={{ ease: 'easeInOut', duration: 0.1 }}
-              className="absolute left-0 w-full z-10 overflow-hidden border top-[calc(100%+4px)] rounded-xl bg-secondary border-secondary"
+              className={cn(
+                'absolute left-0 w-full z-10 overflow-y-auto border top-[calc(100%+4px)] rounded-xl bg-secondary border-secondary',
+                maxHeight && `max-h-[${maxHeight}px]`
+              )}
             >
               <div className="flex flex-col">
                 {options.map((option, index) => (

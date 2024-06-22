@@ -6,6 +6,7 @@ type Props = {
   control: Control<any>;
   isRequired?: boolean;
   label?: string;
+  maxHeight?: number;
   first: {
     name: string;
     errors?: any;
@@ -29,7 +30,7 @@ type Props = {
   };
 };
 
-export const DualMenu = ({ control, first, second, label, isRequired = false }: Props) => {
+export const DualMenu = ({ control, first, second, label, isRequired = false, maxHeight }: Props) => {
   const {
     field: { value },
   } = useController({ name: first.name, control });
@@ -54,6 +55,7 @@ export const DualMenu = ({ control, first, second, label, isRequired = false }: 
           label={first.label}
           placeholder={first.placeholder}
           isLabelInner
+          maxHeight={maxHeight}
         />
         <Menu
           control={control}
@@ -63,6 +65,7 @@ export const DualMenu = ({ control, first, second, label, isRequired = false }: 
           placeholder={second.placeholder}
           isDisabled={!value}
           isLabelInner
+          maxHeight={maxHeight}
         />
       </div>
     </div>

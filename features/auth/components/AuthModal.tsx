@@ -16,17 +16,17 @@ export const AuthModal = ({ close }: Props) => {
   const changeMode = () => setMode((state) => (state === 'login' ? 'register' : 'login'));
 
   return (
-    <Modal close={close} className="max-w-sm w-full rounded-3xl overflow-hidden">
-      <div className="p-3 bg-primary/85">
+    <Modal close={close} className="w-full max-w-sm overflow-hidden rounded-3xl">
+      <div className="p-3 bg-primary/90 backdrop-blur-md">
         <div className="grid grid-cols-[1fr_auto_1fr]">
           <div />
           <div>{mode === 'login' ? 'Inloggning' : 'Registrering'}</div>
           <button onClick={close} className="justify-self-end icon-[clarity--close-line] text-2xl"></button>
         </div>
         <AnimatePresence initial={false}>{mode === 'login' ? <LoginForm /> : <RegisterForm />}</AnimatePresence>
-        <div className="text-sm text-center pt-4 pb-1">
+        <div className="pt-4 pb-1 text-sm text-center">
           {mode === 'login' ? 'Inget konto?' : 'Redan registrerad?'}{' '}
-          <button onClick={changeMode} type="button" className="text-accent font-medium hover:underline">
+          <button onClick={changeMode} type="button" className="font-medium text-accent hover:underline">
             {mode === 'login' ? 'Nytt konto' : 'Logga in'}{' '}
           </button>
         </div>
