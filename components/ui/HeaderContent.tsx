@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { FilterButton } from '../../features/filter';
+import { FilterButton } from '@/features/filter';
 
 export const HeaderContent = () => {
   const path = usePathname();

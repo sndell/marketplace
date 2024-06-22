@@ -3,8 +3,8 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './features/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
@@ -13,6 +13,7 @@ const config: Config = {
         accent: '#F36F5D',
         primary: '#F6F2F1',
         primaryDark: '#eee8e7',
+        secondary: '#F4F4F4',
         background: '#FFFFFF',
       },
       textColor: {
@@ -20,6 +21,10 @@ const config: Config = {
         primaryLight: '#909090',
         secondary: '#ffffff',
         accent: '#F36F5D',
+        error: '#ff3d23',
+      },
+      borderColor: {
+        secondary: '#e4e4e4',
       },
       screens: {
         xs: '560px',

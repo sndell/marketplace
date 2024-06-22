@@ -4,7 +4,7 @@ import { cn } from '@/util/cn';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { ProfileButton } from '../../features/auth';
+import { AuthButton } from '../../features/auth';
 
 type Link = {
   href: string;
@@ -27,7 +27,7 @@ export const Navbar = () => {
       {links.map((link) => (
         <NavLink key={link.href} path={path} {...link} />
       ))}
-      <ProfileButton mode="mobile" />
+      <AuthButton mode="mobile" />
     </div>
   );
 };
