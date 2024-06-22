@@ -11,17 +11,17 @@ type Props = {
 
 export const Input = ({ registration, errors, type = 'text', isRequired = false, label, placeholder }: Props) => {
   return (
-    <label className="space-y-1 text-sm h-fit">
-      <div className="font-medium">
+    <label className="space-y-1">
+      <div className="text-sm font-medium">
         {label}
         {isRequired && <span className="text-error">*</span>}
-        {errors && <span className="text-error font-normal"> {errors.message}</span>}
+        {errors && <span className="font-normal text-error"> {errors.message}</span>}
       </div>
       <input
         type={type}
         placeholder={placeholder}
         {...registration}
-        className="w-full h-10 px-4 bg-secondary rounded-xl border border-secondary"
+        className="w-full px-3 py-2 border bg-secondary rounded-xl border-secondary"
       />
     </label>
   );

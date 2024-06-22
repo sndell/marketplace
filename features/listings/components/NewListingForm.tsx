@@ -86,7 +86,7 @@ export const NewListingForm = () => {
             errors={errors.description}
             isRequired
           />
-          <div className={cn('text-xs text-right', description.length > 2000 && 'text-error')}>
+          <div className={cn('text-sm text-right', description.length > 2000 && 'text-error')}>
             {description.length}/2000 tecken
           </div>
         </div>

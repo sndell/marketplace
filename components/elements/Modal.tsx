@@ -16,7 +16,7 @@ export const Modal = ({ close, className, children }: Props) => {
       animate={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
       exit={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}
       onMouseDown={close}
-      className="absolute inset-0 z-10 grid p-2 bg-black/30 place-items-center"
+      className="fixed inset-0 z-10 grid p-2 bg-black/30 place-items-center"
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}

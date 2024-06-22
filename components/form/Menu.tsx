@@ -67,13 +67,13 @@ export const Menu = ({
         type="button"
         ref={ref}
         className={cn(
-          'relative flex items-center justify-between w-full p-2 text-sm border bg-secondary text-start rounded-xl border-secondary',
+          'relative flex items-center justify-between w-full px-3 py-2 border bg-secondary text-start rounded-xl border-secondary',
           isDisabled && 'cursor-not-allowed'
         )}
       >
         <div>
           {isLabelInner && label && (
-            <div className="text-xs text-primaryLight">
+            <div className="text-sm text-primaryLight">
               {label}
               {isRequired && <span className="text-error">*</span>}
             </div>
@@ -89,7 +89,7 @@ export const Menu = ({
               exit={{ height: 0 }}
               transition={{ ease: 'easeInOut', duration: 0.1 }}
               className={cn(
-                'absolute left-0 w-full z-10 overflow-y-auto border top-[calc(100%+4px)] rounded-xl bg-secondary border-secondary',
+                'absolute left-0 w-full z-10 overflow-y-auto border top-[calc(100%+4px)] rounded-xl bg-secondary shadow-lg border-secondary',
                 maxHeight && `max-h-[${maxHeight}px]`
               )}
             >

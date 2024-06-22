@@ -12,8 +12,8 @@ type Props = {
 
 export const Textarea = ({ errors, register, label, placeholder, isRequired = false }: Props) => {
   return (
-    <label className="flex flex-col gap-1 text-sm">
-      <div className="font-medium ">
+    <label className="flex flex-col gap-1">
+      <div className="text-sm font-medium">
         {label}
         {isRequired && <span className="text-error">*</span>}
         {errors && <span className="font-normal text-error"> {errors.message}</span>}
