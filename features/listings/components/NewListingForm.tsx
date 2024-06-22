@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { NewListingValues, newListingSchema } from '../schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input, DualMenu, Textarea } from '@/components/form';
-import { mainCategories, subcategories } from '@/features/listings/data';
+import { mainCategories, municipalities, regions, subcategories } from '@/features/listings/data';
 import { cn } from '@/util/cn';
 
 export const NewListingForm = () => {
@@ -21,23 +21,8 @@ export const NewListingForm = () => {
   const description = watch('description') || '';
 
   return (
-    <div className="grid px-3 mx-auto md:grid-cols-2 lg:grid-cols-3 max-w-7xl xs:py-3">
+    <div className="grid px-3 pb-3 mx-auto md:grid-cols-2 lg:grid-cols-3 max-w-7xl xs:py-3">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-        <Input
-          registration={register('title')}
-          errors={errors.title}
-          label="Rubrik"
-          isRequired
-          placeholder="Vad vill du sälja?"
-        />
-        <Input
-          registration={register('price')}
-          errors={errors.title}
-          label="Pris (kronor)"
-          type="number"
-          isRequired
-          placeholder="Ange önskat pris"
-        />
         <DualMenu
           control={control}
           label="Kategori"
@@ -56,6 +41,42 @@ export const NewListingForm = () => {
             placeholder: 'Välj från listan',
             options: subcategories,
           }}
+          maxHeight={320}
+        />
+        <DualMenu
+          control={control}
+          label="Plats"
+          isRequired
+          first={{
+            name: 'location.region',
+            errors: errors.location?.region,
+            label: 'Region',
+            placeholder: 'Välj från listan',
+            options: regions,
+          }}
+          second={{
+            name: 'location.municipality',
+            errors: errors.location?.municipality,
+            label: 'Kommun',
+            placeholder: 'Välj från listan',
+            options: municipalities,
+          }}
+          maxHeight={320}
+        />
+        <Input
+          registration={register('title')}
+          errors={errors.title}
+          label="Rubrik"
+          isRequired
+          placeholder="Vad vill du sälja?"
+        />
+        <Input
+          registration={register('price')}
+          errors={errors.title}
+          label="Pris (kronor)"
+          type="number"
+          isRequired
+          placeholder="Ange önskat pris"
         />
         <div className="space-y-1">
           <Textarea
@@ -69,7 +90,7 @@ export const NewListingForm = () => {
             {description.length}/2000 tecken
           </div>
         </div>
-        <button>Submit</button>
+        <button className="py-2 rounded-full bg-accent text-secondary">Skapa annons</button>
       </form>
     </div>
   );
