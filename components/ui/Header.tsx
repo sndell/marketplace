@@ -4,7 +4,7 @@ import { Navbar } from './Navbar';
 
 export const Header = () => (
   <div className="xs:bg-primary">
-    <div className="grid w-full grid-cols-[1fr_auto] xs:grid-cols-[auto_1fr] gap-3 md:grid-cols-[1fr_auto_1fr] p-3 mx-auto max-w-7xl items-center">
+    <div className="grid w-full grid-cols-[1fr_auto] xs:grid-cols-[auto_1fr] gap-3 md:grid-cols-[1fr_auto_1fr] p-2 xs:p-3 mx-auto max-w-7xl items-center">
       <HeaderContent />
       <Navbar />
       <div className="flex gap-2 justify-self-end">
