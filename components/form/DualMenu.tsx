@@ -4,14 +4,6 @@ import { Menu } from './Menu';
 
 type Props = {
   control: Control<any>;
-  options: {
-    value: string;
-    label: string;
-    subcategories: {
-      value: string;
-      label: string;
-    }[];
-  }[];
   isRequired?: boolean;
   label?: string;
   first: {
@@ -19,27 +11,28 @@ type Props = {
     errors?: any;
     label?: string;
     placeholder?: string;
+    options: {
+      value: string;
+      label: string;
+    }[];
   };
   second: {
     name: string;
     errors?: any;
     label?: string;
     placeholder?: string;
+    options: {
+      value: string;
+      label: string;
+      parent: string;
+    }[];
   };
 };
 
-export const DualMenu = ({ control, first, options, second, label, isRequired = false }: Props) => {
+export const DualMenu = ({ control, first, second, label, isRequired = false }: Props) => {
   const {
     field: { value },
   } = useController({ name: first.name, control });
-
-  const firstOptions = options.map((option) => ({ value: option.value, label: option.label }));
-  const [secondOptions, setSecondOptions] = useState<{ label: string; value: string }[]>([]);
-
-  useEffect(() => {
-    const selectedOption = options.find((option) => option.value === value);
-    setSecondOptions(selectedOption ? selectedOption.subcategories : []);
-  }, [value, options]);
 
   const getError = (): string | undefined => {
     if (first.errors) return first.errors.message;
@@ -57,7 +50,7 @@ export const DualMenu = ({ control, first, options, second, label, isRequired = 
         <Menu
           control={control}
           name={first.name}
-          options={firstOptions}
+          options={first.options}
           label={first.label}
           placeholder={first.placeholder}
           isLabelInner
@@ -65,7 +58,7 @@ export const DualMenu = ({ control, first, options, second, label, isRequired = 
         <Menu
           control={control}
           name={second.name}
-          options={secondOptions}
+          options={second.options.filter((sub) => sub.parent === value) || []}
           label={second.label}
           placeholder={second.placeholder}
           isDisabled={!value}

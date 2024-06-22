@@ -3,8 +3,9 @@
 import { useForm } from 'react-hook-form';
 import { NewListingValues, newListingSchema } from '../schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input, DualMenu } from '@/components/form';
-import { newListingCategories } from '@/data/categories';
+import { Input, DualMenu, Textarea } from '@/components/form';
+import { mainCategories, subcategories } from '@/features/listings/data';
+import { cn } from '@/util/cn';
 
 export const NewListingForm = () => {
   const {
@@ -16,6 +17,8 @@ export const NewListingForm = () => {
   } = useForm<NewListingValues>({ resolver: zodResolver(newListingSchema) });
 
   const onSubmit = (data: NewListingValues) => console.log(data);
+
+  const description = watch('description') || '';
 
   return (
     <div className="grid px-3 mx-auto md:grid-cols-2 lg:grid-cols-3 max-w-7xl xs:py-3">
@@ -37,7 +40,6 @@ export const NewListingForm = () => {
         />
         <DualMenu
           control={control}
-          options={newListingCategories}
           label="Kategori"
           isRequired
           first={{
@@ -45,14 +47,28 @@ export const NewListingForm = () => {
             errors: errors.category?.primary,
             label: 'Huvudkategori',
             placeholder: 'Välj från listan',
+            options: mainCategories,
           }}
           second={{
             name: 'category.secondary',
             errors: errors.category?.secondary,
             label: 'Underkategori',
             placeholder: 'Välj från listan',
+            options: subcategories,
           }}
         />
+        <div className="space-y-1">
+          <Textarea
+            register={register('description')}
+            label="Beskrivning"
+            placeholder="Beskriv om det du säljer"
+            errors={errors.description}
+            isRequired
+          />
+          <div className={cn('text-xs text-right', description.length > 2000 && 'text-error')}>
+            {description.length}/2000 tecken
+          </div>
+        </div>
         <button>Submit</button>
       </form>
     </div>
