@@ -6,8 +6,8 @@ import { AnimatePresence } from 'framer-motion';
 import { useMutation } from '@tanstack/react-query';
 import Image from 'next/image';
 import { cn } from '@/util/cn';
-import { useCurrentUser } from '@/features/hooks/useCurrentUser';
-import { useLogout } from '@/features/hooks/useLogout';
+import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser';
+import { useLogout } from '@/features/auth/hooks/useLogout';
 
 type Props = {
   mode: 'desktop' | 'mobile';

@@ -5,7 +5,7 @@ import { RegisterFormSchema, RegisterFormValues } from '@/features/auth/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { useRegister } from '@/features/hooks/useRegister';
+import { useRegister } from '@/features/auth/hooks/useRegister';
 
 export const RegisterForm = () => {
   const handleRegisterErrors = (error: string) =>

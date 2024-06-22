@@ -5,7 +5,7 @@ import { LoginFormSchema, LoginFormValues } from '@/features/auth/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { useLogin } from '@/features/hooks/useLogin';
+import { useLogin } from '@/features/auth/hooks/useLogin';
 
 export const LoginForm = () => {
   const handleRegisterErrors = (error: string) => {
