@@ -3,20 +3,20 @@
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 type Props = {
-  errors?: FieldError;
+  error?: FieldError;
   register: Partial<UseFormRegisterReturn>;
   label?: string;
   placeholder?: string;
   isRequired?: boolean;
 };
 
-export const Textarea = ({ errors, register, label, placeholder, isRequired = false }: Props) => {
+export const Textarea = ({ error, register, label, placeholder, isRequired = false }: Props) => {
   return (
     <label className="flex flex-col gap-1">
       <div className="text-sm font-medium">
         {label}
         {isRequired && <span className="text-error">*</span>}
-        {errors && <span className="font-normal text-error"> {errors.message}</span>}
+        {error && <span className="font-normal text-error"> {error.message}</span>}
       </div>
       <textarea
         {...register}

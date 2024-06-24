@@ -13,7 +13,7 @@ import { ListingValues } from '@/features/listing/schema';
 
 type Props = {
   control: Control<ListingValues>;
-  errors?:
+  error?:
     | Merge<FieldError, (Merge<FieldError, FieldErrorsImpl<{ url: string; id: string }>> | undefined)[]>
     | undefined
     | FieldError;
@@ -23,7 +23,7 @@ type Props = {
   maxImages?: number;
 };
 
-export const MultipleImages = ({ control, description, errors, isRequired, label, maxImages = 0 }: Props) => {
+export const MultipleImages = ({ control, description, error, isRequired, label, maxImages = 0 }: Props) => {
   const {
     field: { value: images, onChange },
   } = useController({
@@ -86,7 +86,7 @@ export const MultipleImages = ({ control, description, errors, isRequired, label
           <div className="font-medium">
             {label}
             {isRequired && <span className="text-error">*</span>}
-            {errors && <span className="font-normal text-error"> {errors.message}</span>}
+            {error && <span className="font-normal text-error"> {error.message}</span>}
           </div>
           {description && <div className="text-sm text-primaryLight py-1">{description}</div>}
         </div>

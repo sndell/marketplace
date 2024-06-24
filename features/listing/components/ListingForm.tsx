@@ -32,14 +32,14 @@ export const ListingForm = () => {
           isRequired
           first={{
             name: 'category.primary',
-            errors: errors.category?.primary,
+            error: errors.category?.primary,
             label: 'Huvudkategori',
             placeholder: 'Välj från listan',
             options: mainCategories,
           }}
           second={{
             name: 'category.secondary',
-            errors: errors.category?.secondary,
+            error: errors.category?.secondary,
             label: 'Underkategori',
             placeholder: 'Välj från listan',
             options: subcategories,
@@ -52,14 +52,14 @@ export const ListingForm = () => {
           isRequired
           first={{
             name: 'location.region',
-            errors: errors.location?.region,
+            error: errors.location?.region,
             label: 'Region',
             placeholder: 'Välj från listan',
             options: regions,
           }}
           second={{
             name: 'location.municipality',
-            errors: errors.location?.municipality,
+            error: errors.location?.municipality,
             label: 'Kommun',
             placeholder: 'Välj från listan',
             options: municipalities,
@@ -68,14 +68,14 @@ export const ListingForm = () => {
         />
         <Input
           registration={register('title')}
-          errors={errors.title}
+          error={errors.title}
           label="Rubrik"
           isRequired
           placeholder="Vad vill du sälja?"
         />
         <Input
           registration={register('price')}
-          errors={errors.title}
+          error={errors.title}
           label="Pris (kronor)"
           type="number"
           isRequired
@@ -83,7 +83,7 @@ export const ListingForm = () => {
         />
         <MultipleImages
           control={control}
-          errors={errors.images}
+          error={errors.images}
           isRequired
           label="Bilder"
           maxImages={6}
@@ -94,7 +94,7 @@ export const ListingForm = () => {
             register={register('description')}
             label="Beskrivning"
             placeholder="Beskriv om det du säljer"
-            errors={errors.description}
+            error={errors.description}
             isRequired
           />
           <div className={cn('text-sm text-right', description.length > 2000 && 'text-error')}>

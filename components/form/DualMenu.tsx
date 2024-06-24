@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { Menu } from './Menu';
 
@@ -9,7 +8,7 @@ type Props = {
   maxHeight?: number;
   first: {
     name: string;
-    errors?: any;
+    error?: any;
     label?: string;
     placeholder?: string;
     options: {
@@ -19,7 +18,7 @@ type Props = {
   };
   second: {
     name: string;
-    errors?: any;
+    error?: any;
     label?: string;
     placeholder?: string;
     options: {
@@ -36,8 +35,8 @@ export const DualMenu = ({ control, first, second, label, isRequired = false, ma
   } = useController({ name: first.name, control });
 
   const getError = (): string | undefined => {
-    if (first.errors) return first.errors.message;
-    else if (second.errors) return second.errors.message;
+    if (first.error) return first.error.message;
+    else if (second.error) return second.error.message;
   };
 
   return (

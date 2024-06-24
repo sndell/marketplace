@@ -6,7 +6,7 @@ import { useOnClickOutside } from 'usehooks-ts';
 
 type Props = {
   control: Control<any>;
-  errors?: FieldError;
+  error?: FieldError;
   label?: string;
   isLabelInner?: boolean;
   isRequired?: boolean;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export const Menu = ({
-  errors,
+  error,
   isLabelInner = false,
   isRequired = false,
   isDisabled = false,
@@ -58,9 +58,7 @@ export const Menu = ({
         <div className="pt-1 text-sm font-medium">
           {label}
           {isRequired && <span className="text-error">*</span>}
-          {errors && (
-            <span className="font-normal text-error"> {errors.message}</span>
-          )}
+          {error && <span className="font-normal text-error"> {error.message}</span>}
         </div>
       )}
       <button
@@ -82,10 +80,7 @@ export const Menu = ({
           )}
           {value ? getLabelByValue(value) : placeholder}
         </div>
-        <motion.span
-          animate={{ rotateZ: isMenuOpen ? -180 : 0 }}
-          className="icon-[solar--alt-arrow-down-linear]"
-        />
+        <motion.span animate={{ rotateZ: isMenuOpen ? -180 : 0 }} className="icon-[solar--alt-arrow-down-linear]" />
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
