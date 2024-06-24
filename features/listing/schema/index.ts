@@ -5,7 +5,7 @@ export const listingSchema = z.object({
     region: z.string().min(1, 'Region krävs'),
     municipality: z.string().min(1, 'Kommun krävs'),
   }),
-  photos: z
+  images: z
     .array(z.object({ url: z.string(), id: z.string() }))
     .min(1, { message: 'Minst 1 bild krävs' })
     .max(6, { message: 'Max 6 bilder' }),
@@ -18,10 +18,7 @@ export const listingSchema = z.object({
     .min(1, { message: 'Priset är för lågt' })
     .max(99999999, { message: 'Priset är för högt' }),
   title: z.string().min(1, { message: 'Titel krävs' }).max(100, { message: 'Titeln är för lång' }),
-  description: z
-    .string()
-    .min(1, { message: 'Beskriving krävs' })
-    .max(2000, { message: 'Beskrivningen är för lång' }),
+  description: z.string().min(1, { message: 'Beskriving krävs' }).max(2000, { message: 'Beskrivningen är för lång' }),
 });
 
 export const listingFilterValidator = z.object({

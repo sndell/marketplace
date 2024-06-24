@@ -20,57 +20,57 @@ type Props = {
   label?: string;
   description?: string;
   isRequired?: boolean;
-  maxPhotos?: number;
+  maxImages?: number;
 };
 
-export const MultiplePhotos = ({ control, description, errors, isRequired, label, maxPhotos = 0 }: Props) => {
+export const MultipleImages = ({ control, description, errors, isRequired, label, maxImages = 0 }: Props) => {
   const {
-    field: { value: photos, onChange },
+    field: { value: images, onChange },
   } = useController({
-    name: 'photos',
+    name: 'images',
     control,
     defaultValue: [],
   });
-  const [tempPhotos, setTempPhotos] = useState(0);
+  const [tempImages, setTempImages] = useState(0);
   const { uploadImages } = useUploadImages();
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      const newPhotos = await Promise.all(
+      const newImages = await Promise.all(
         acceptedFiles.map(async (file) => {
           const extension = await getFileExtension(file);
           return extension ? { file, id: uuid(), extension: `.${extension}` } : null;
         })
       );
 
-      const validPhotos = newPhotos.filter(Boolean);
-      if (validPhotos.length === 0) return;
+      const validImages = newImages.filter(Boolean);
+      if (validImages.length === 0) return;
 
-      setTempPhotos(validPhotos.length);
+      setTempImages(validImages.length);
 
       try {
-        const uploadedPhotos = await uploadImages(
-          validPhotos.map((photo) => photo!.file),
-          validPhotos.map((photo) => photo!.extension)
+        const uploadedImages = await uploadImages(
+          validImages.map((image) => image!.file),
+          validImages.map((image) => image!.extension)
         );
-        onChange([...photos, ...uploadedPhotos]);
+        onChange([...images, ...uploadedImages]);
       } catch (error) {
         console.error(error);
       } finally {
-        setTempPhotos(0);
+        setTempImages(0);
       }
     },
-    [photos, onChange, uploadImages]
+    [images, onChange, uploadImages]
   );
 
-  const handleDelete = (id: string) => onChange(photos.filter((photo) => photo.id !== id));
+  const handleDelete = (id: string) => onChange(images.filter((image) => image.id !== id));
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
     if (active?.id !== over?.id) {
-      const oldIndex = photos.findIndex((photo) => photo.id === active.id);
-      const newIndex = photos.findIndex((photo) => photo.id === over.id);
-      onChange(arrayMove(photos, oldIndex, newIndex));
+      const oldIndex = images.findIndex((image) => image.id === active.id);
+      const newIndex = images.findIndex((image) => image.id === over.id);
+      onChange(arrayMove(images, oldIndex, newIndex));
     }
   };
 
@@ -93,18 +93,18 @@ export const MultiplePhotos = ({ control, description, errors, isRequired, label
       )}
       <div className="grid grid-cols-2 gap-2">
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={photos.map((photo) => photo.id)}>
-            {photos.map((photo: { url: string; id: string }, index: number) => (
-              <Photo key={index} {...photo} index={index} handleDelete={handleDelete} />
+          <SortableContext items={images.map((image) => image.id)}>
+            {images.map((image: { url: string; id: string }, index: number) => (
+              <Image key={index} {...image} index={index} handleDelete={handleDelete} />
             ))}
           </SortableContext>
-          {[...Array(tempPhotos)].map((_, index) => (
-            <TempPhoto key={index} />
+          {[...Array(tempImages)].map((_, index) => (
+            <TempImage key={index} />
           ))}
-          {photos.length < maxPhotos - tempPhotos && (
+          {images.length < maxImages - tempImages && (
             <Dropzone
               onDrop={onDrop}
-              maxFiles={maxPhotos - photos.length}
+              maxFiles={maxImages - images.length}
               accept={{
                 'image/png': ['.png'],
                 'image/jpeg': ['.jpg', '.jpeg'],
@@ -117,7 +117,7 @@ export const MultiplePhotos = ({ control, description, errors, isRequired, label
                   {...getRootProps()}
                   className={cn(
                     'border cursor-pointer border-dashed rounded-xl flex px-2 flex-col items-center justify-center text-center gap-2 text-primaryLight',
-                    photos.length === 0 && tempPhotos === 0 ? 'col-span-2 py-12' : 'aspect-square'
+                    images.length === 0 && tempImages === 0 ? 'col-span-2 py-12' : 'aspect-square'
                   )}
                 >
                   <input {...getInputProps()} />
@@ -134,7 +134,7 @@ export const MultiplePhotos = ({ control, description, errors, isRequired, label
   );
 };
 
-const TempPhoto = () => (
+const TempImage = () => (
   <div className="relative w-full overflow-hidden border rounded-xl border-secondary aspect-square">
     <div className="absolute inset-0 grid h-full place-items-center">
       <span className="icon-[svg-spinners--ring-resize] text-2xl text-primaryLight" />
@@ -142,7 +142,7 @@ const TempPhoto = () => (
   </div>
 );
 
-const Photo = ({
+const Image = ({
   url,
   index,
   id,
@@ -170,7 +170,7 @@ const Photo = ({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={url}
-        alt={`photo-${index}`}
+        alt={`image-${index}`}
         className="object-cover border-b aspect-square rounded-xl border-secondary"
         height={1080}
         width={1080}

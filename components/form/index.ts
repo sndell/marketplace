@@ -3,4 +3,4 @@ export * from './Checkbox';
 export * from './DualMenu';
 export * from './Menu';
 export * from './Textarea';
-export * from './MultiplePhotos';
+export * from './MultipleImages';

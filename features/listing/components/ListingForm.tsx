@@ -3,7 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { ListingValues, listingSchema } from '../schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input, DualMenu, Textarea, MultiplePhotos } from '@/components/form';
+import { Input, DualMenu, Textarea, MultipleImages } from '@/components/form';
 // import { DevTool } from '@hookform/devtools';
 import { mainCategories, municipalities, regions, subcategories } from '@/features/listing/data';
 import { cn } from '@/util/cn';
@@ -81,12 +81,12 @@ export const ListingForm = () => {
           isRequired
           placeholder="Ange önskat pris"
         />
-        <MultiplePhotos
+        <MultipleImages
           control={control}
-          errors={errors.photos}
+          errors={errors.images}
           isRequired
           label="Bilder"
-          maxPhotos={6}
+          maxImages={6}
           description="Lägg till upp till 6 bilder på det du säljer. Varje bild får vara max 10 MB."
         />
         <div className="space-y-1">
