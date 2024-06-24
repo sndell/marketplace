@@ -95,7 +95,7 @@ export const MultipleImages = ({ control, description, errors, isRequired, label
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={images.map((image) => image.id)}>
             {images.map((image: { url: string; id: string }, index: number) => (
-              <Image key={index} {...image} index={index} handleDelete={handleDelete} />
+              <SortableImage key={index} {...image} index={index} handleDelete={handleDelete} />
             ))}
           </SortableContext>
           {[...Array(tempImages)].map((_, index) => (
@@ -110,7 +110,7 @@ export const MultipleImages = ({ control, description, errors, isRequired, label
                 'image/jpeg': ['.jpg', '.jpeg'],
                 'image/webp': ['.webp'],
               }}
-              maxSize={20000000}
+              maxSize={20971520}
             >
               {({ getRootProps, getInputProps }) => (
                 <div
@@ -142,7 +142,7 @@ const TempImage = () => (
   </div>
 );
 
-const Image = ({
+const SortableImage = ({
   url,
   index,
   id,
@@ -158,6 +158,7 @@ const Image = ({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    zIndex: isDragging ? 10 : 0,
   };
 
   return (
