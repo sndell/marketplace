@@ -16,6 +16,7 @@ model User {
   password        String
   createdAt       DateTime  @default(now())
   sessions        Session[]
+  images          Image[]
 }
 
 model Session {
@@ -24,4 +25,13 @@ model Session {
   createdAt DateTime @default(now())
   expiresAt DateTime
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Image {
+  id        String    @id @default(cuid())
+  creatorId String
+  url       String
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+  user      User      @relation(fields: [creatorId], references: [id])
 }
