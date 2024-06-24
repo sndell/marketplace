@@ -87,7 +87,7 @@ export const ListingForm = () => {
           isRequired
           label="Bilder"
           maxImages={6}
-          description="Lägg till upp till 6 bilder på det du säljer. Varje bild får vara max 10 MB."
+          description="Lägg till upp till 6 bilder, max 20MB per bild. Håll in på en bild för att ändra ordning. Första bilden blir omslagsbild."
         />
         <div className="space-y-1">
           <Textarea
