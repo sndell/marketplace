@@ -58,7 +58,9 @@ export const Menu = ({
         <div className="pt-1 text-sm font-medium">
           {label}
           {isRequired && <span className="text-error">*</span>}
-          {errors && <span className="font-normal text-error"> {errors.message}</span>}
+          {errors && (
+            <span className="font-normal text-error"> {errors.message}</span>
+          )}
         </div>
       )}
       <button
@@ -80,13 +82,18 @@ export const Menu = ({
           )}
           {value ? getLabelByValue(value) : placeholder}
         </div>
-        <motion.span animate={{ rotateZ: isMenuOpen ? -180 : 0 }} className="icon-[solar--alt-arrow-down-linear]" />
+        <motion.span
+          animate={{ rotateZ: isMenuOpen ? -180 : 0 }}
+          className="icon-[solar--alt-arrow-down-linear]"
+        />
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              initial={{ height: 0 }}
-              animate={{ maxHeight, height: 'auto' }}
-              exit={{ height: 0 }}
+              initial={{ maxHeight: 0 }}
+              animate={{
+                maxHeight: maxHeight ? maxHeight : 'auto',
+              }}
+              exit={{ maxHeight: 0 }}
               transition={{ ease: 'easeInOut', duration: 0.1 }}
               className={cn(
                 'absolute left-0 w-full z-10 overflow-y-auto border top-[calc(100%+4px)] rounded-xl bg-secondary shadow-lg border-secondary',

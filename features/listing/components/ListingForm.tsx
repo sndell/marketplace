@@ -1,22 +1,25 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { NewListingValues, newListingSchema } from '../schema';
+import { ListingValues, listingSchema } from '../schema';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input, DualMenu, Textarea } from '@/components/form';
-import { mainCategories, municipalities, regions, subcategories } from '@/features/listings/data';
+import { Input, DualMenu, Textarea, MultiplePhotos } from '@/components/form';
+// import { DevTool } from '@hookform/devtools';
+import { mainCategories, municipalities, regions, subcategories } from '@/features/listing/data';
 import { cn } from '@/util/cn';
 
-export const NewListingForm = () => {
+export const ListingForm = () => {
   const {
     handleSubmit,
     register,
     formState: { errors },
     watch,
     control,
-  } = useForm<NewListingValues>({ resolver: zodResolver(newListingSchema) });
+  } = useForm<ListingValues>({
+    resolver: zodResolver(listingSchema),
+  });
 
-  const onSubmit = (data: NewListingValues) => console.log(data);
+  const onSubmit = (data: ListingValues) => console.log(data);
 
   const description = watch('description') || '';
 
@@ -78,6 +81,14 @@ export const NewListingForm = () => {
           isRequired
           placeholder="Ange önskat pris"
         />
+        <MultiplePhotos
+          control={control}
+          errors={errors.photos}
+          isRequired
+          label="Bilder"
+          maxPhotos={6}
+          description="Lägg till upp till 6 bilder på det du säljer. Varje bild får vara max 10 MB."
+        />
         <div className="space-y-1">
           <Textarea
             register={register('description')}
@@ -91,6 +102,7 @@ export const NewListingForm = () => {
           </div>
         </div>
         <button className="py-2 rounded-full bg-accent text-secondary">Skapa annons</button>
+        {/* <DevTool control={control} /> */}
       </form>
     </div>
   );

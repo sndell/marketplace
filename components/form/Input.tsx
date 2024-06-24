@@ -9,13 +9,22 @@ type Props = {
   isRequired?: boolean;
 };
 
-export const Input = ({ registration, errors, type = 'text', isRequired = false, label, placeholder }: Props) => {
+export const Input = ({
+  registration,
+  errors,
+  type = 'text',
+  isRequired = false,
+  label,
+  placeholder,
+}: Props) => {
   return (
     <label className="space-y-1">
       <div className="text-sm font-medium">
         {label}
         {isRequired && <span className="text-error">*</span>}
-        {errors && <span className="font-normal text-error"> {errors.message}</span>}
+        {errors && (
+          <span className="font-normal text-error"> {errors.message}</span>
+        )}
       </div>
       <input
         type={type}
