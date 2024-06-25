@@ -36,12 +36,10 @@ export const MultipleImages = ({ control, description, error, isRequired, label,
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      const newImages = await Promise.all(
-        acceptedFiles.map(async (file) => {
-          const extension = await getFileExtension(file);
-          return extension ? { file, id: uuid(), extension: `.${extension}` } : null;
-        })
-      );
+      const newImages = acceptedFiles.map((file) => {
+        const extension = file.type.split('/')[1];
+        return { file, id: uuid(), extension: `.${extension}` };
+      });
 
       const validImages = newImages.filter(Boolean);
       if (validImages.length === 0) return;

@@ -1,23 +1,16 @@
-import {
-  newImageRequestSchema,
-  newImageResponseSchema,
-} from '@/features/image';
+import { newImageRequestSchema, newImageResponseSchema } from '@/features/image';
 import { validateRequest } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
 export async function POST(req: Request) {
   try {
     const { user } = await validateRequest();
-    if (!user)
-      return Response.json({ message: 'Unauthorized' }, { status: 401 });
+    if (!user) return Response.json({ message: 'Unauthorized' }, { status: 401 });
 
     const data = await req.json();
     const validation = newImageRequestSchema.safeParse(data);
     if (!validation.success)
-      return Response.json(
-        { error: 'invalid-request', message: 'Invalid data' },
-        { status: 400 }
-      );
+      return Response.json({ error: 'invalid-request', message: 'Invalid data' }, { status: 400 });
 
     const uploadedData = await prisma.image.createManyAndReturn({
       data: [
@@ -37,6 +30,6 @@ export async function POST(req: Request) {
     return Response.json(response, { status: 201 });
   } catch (error) {
     console.log(error);
-    return Response.json({ message: 'Error' }, { status: 500 });
+    return Response.json({ message: 'Internal server error' }, { status: 500 });
   }
 }

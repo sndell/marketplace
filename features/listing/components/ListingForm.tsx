@@ -7,8 +7,10 @@ import { Input, DualMenu, Textarea, MultipleImages } from '@/components/form';
 // import { DevTool } from '@hookform/devtools';
 import { mainCategories, municipalities, regions, subcategories } from '@/features/listing/data';
 import { cn } from '@/util/cn';
+import { useNewListing } from '../hooks/useNewListing';
 
 export const ListingForm = () => {
+  const newListing = useNewListing();
   const {
     handleSubmit,
     register,
@@ -19,7 +21,14 @@ export const ListingForm = () => {
     resolver: zodResolver(listingSchema),
   });
 
-  const onSubmit = (data: ListingValues) => console.log(data);
+  const onSubmit = async (data: ListingValues) => {
+    try {
+      const res = await newListing.mutateAsync(data);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const description = watch('description') || '';
 
@@ -101,7 +110,9 @@ export const ListingForm = () => {
             {description.length}/2000 tecken
           </div>
         </div>
-        <button className="py-2 rounded-full bg-accent text-secondary">Skapa annons</button>
+        <button className="flex justify-center h-[42px] items-center rounded-full bg-accent text-secondary">
+          {newListing.isPending ? <span className="icon-[svg-spinners--3-dots-scale] text-3xl" /> : 'Skapa annons'}
+        </button>
         {/* <DevTool control={control} /> */}
       </form>
     </div>

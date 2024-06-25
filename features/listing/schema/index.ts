@@ -26,5 +26,9 @@ export const listingFilterValidator = z.object({
   category: z.string().optional(),
 });
 
+export const listingSchemaResponse = z.object({
+  id: z.string(),
+});
+
 export type ListingFilterValues = z.infer<typeof listingFilterValidator>;
 export type ListingValues = z.infer<typeof listingSchema>;
