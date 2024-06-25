@@ -40,14 +40,14 @@ export const LoginForm = () => {
     >
       <Input
         registration={register('email')}
-        errors={errors.email}
+        error={errors.email}
         isRequired
         label="Email"
         placeholder="Skriv din email"
       />
       <Input
         registration={register('password')}
-        errors={errors.password}
+        error={errors.password}
         isRequired
         type="password"
         label="Lösenord"

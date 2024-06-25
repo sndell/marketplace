@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import Dropzone from 'react-dropzone';
 import { Control, FieldError, FieldErrorsImpl, Merge, useController } from 'react-hook-form';
 import { v4 as uuid } from 'uuid';
-import { getFileExtension, useUploadImages } from '@/features/image';
+import { useUploadImages } from '@/features/image';
 import { cn } from '@/util/cn';
 import { DndContext, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, arrayMove, useSortable } from '@dnd-kit/sortable';

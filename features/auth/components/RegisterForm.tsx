@@ -31,21 +31,21 @@ export const RegisterForm = () => {
     >
       <Input
         registration={register('email')}
-        errors={errors.email}
+        error={errors.email}
         isRequired
         label="Email"
         placeholder="Skriv din email"
       />
       <Input
         registration={register('displayName')}
-        errors={errors.displayName}
+        error={errors.displayName}
         isRequired
         label="Användarnamn"
         placeholder="Enter your displayname"
       />
       <Input
         registration={register('password')}
-        errors={errors.password}
+        error={errors.password}
         isRequired
         type="password"
         label="Lösenord"
@@ -53,7 +53,7 @@ export const RegisterForm = () => {
       />
       <Input
         registration={register('confirmPassword')}
-        errors={errors.confirmPassword}
+        error={errors.confirmPassword}
         isRequired
         type="password"
         label="Bekräfta lösenord"
