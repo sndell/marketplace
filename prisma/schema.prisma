@@ -16,6 +16,8 @@ model User {
   password        String
   createdAt       DateTime  @default(now())
   sessions        Session[]
+  images          Image[]
+  listings        Listing[]
 }
 
 model Session {
@@ -24,4 +26,39 @@ model Session {
   createdAt DateTime @default(now())
   expiresAt DateTime
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Image {
+  id           String         @id @default(cuid())
+  creatorId    String
+  url          String
+  createdAt    DateTime       @default(now())
+  deletedAt    DateTime?
+  user         User           @relation(fields: [creatorId], references: [id])
+  ListingImage ListingImage[]
+}
+
+model Listing {
+  id           String         @id @default(cuid())
+  title        String
+  description  String
+  price        Int
+  region       String
+  municipality String
+  mainCategory String
+  subcategory  String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  creatorId    String
+  creator      User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  ListingImage ListingImage[]
+}
+
+model ListingImage {
+  listingId String
+  imageId   String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  image     Image   @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@id([listingId, imageId])
 }

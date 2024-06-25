@@ -30,6 +30,9 @@ const config: Config = {
       screens: {
         xs: '560px',
       },
+      padding: {
+        18: '4.5rem',
+      },
       fontSize: {
         '3xl': '32px',
       },

@@ -55,11 +55,11 @@ export const LoginForm = () => {
       />
       <div className="text-sm text-center">
         Glömt ditt lösenord?{' '}
-        <button type="button" className="text-accent font-medium hover:underline">
+        <button type="button" className="font-medium text-accent hover:underline">
           Återställ
         </button>
       </div>
-      <button className="h-10 text-sm rounded-full bg-accent text-secondary">Login</button>
+      <button className="py-2 rounded-full bg-accent text-secondary">Login</button>
     </motion.form>
   );
 };

@@ -1,3 +1,5 @@
+import { ListingForm } from '@/features/listing';
+
 export default function New() {
-  return <div>New</div>;
+  return <ListingForm />;
 }

@@ -23,7 +23,7 @@ export const Navbar = () => {
   const path = usePathname();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex items-center justify-between w-full p-3 bg-primary xs:gap-6 xs:static xs:p-0">
+    <div className="fixed bottom-0 left-0 right-0 z-10 flex items-center justify-between w-full p-3 bg-primary/90 backdrop-blur-md xs:gap-6 xs:static xs:p-0">
       {links.map((link) => (
         <NavLink key={link.href} path={path} {...link} />
       ))}

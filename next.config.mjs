@@ -8,6 +8,12 @@ const nextConfig = {
         port: '',
         pathname: '/api/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'pub-8fbffd02eac84536a6294a8a04e6e48c.r2.dev',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };
