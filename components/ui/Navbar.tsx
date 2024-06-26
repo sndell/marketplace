@@ -16,7 +16,7 @@ const links: Link[] = [
   { href: '/', label: 'Hem', icon: 'icon-[solar--home-2-linear]' },
   { href: '/chat', label: 'Chatt', icon: 'icon-[solar--chat-line-linear]' },
   { href: '/saved', label: 'Sparat', icon: 'icon-[solar--bookmark-linear]' },
-  { href: '/listings/new', label: 'Ny annons', icon: 'icon-[solar--add-square-linear]' },
+  { href: '/listing/new', label: 'Ny annons', icon: 'icon-[solar--add-square-linear]' },
 ];
 
 export const Navbar = () => {

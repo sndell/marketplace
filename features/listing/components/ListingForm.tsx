@@ -5,7 +5,7 @@ import { ListingValues, listingSchema } from '../schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input, DualMenu, Textarea, MultipleImages } from '@/components/form';
 // import { DevTool } from '@hookform/devtools';
-import { mainCategories, municipalities, regions, subcategories } from '@/features/listing/data';
+import { mainCategories, municipalities, regions, subcategories } from '@/features/listing/data/categoriesAndLocations';
 import { cn } from '@/util/cn';
 import { useNewListing } from '../hooks/useNewListing';
 
