@@ -8,6 +8,7 @@ export const getListings = async () => {
       price: true,
       region: true,
       municipality: true,
+      subcategory: true,
       ListingImage: {
         include: {
           image: {
@@ -29,6 +30,7 @@ export const getListings = async () => {
     images: listing.ListingImage.map((image) => ({
       url: image.image.url,
     })),
+    subcategories: listing.subcategory,
   }));
 
   if (!listings || listings.length === 0) return null;

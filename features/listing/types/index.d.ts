@@ -4,6 +4,7 @@ type Listings = {
   price: number;
   region: string;
   municipality: string;
+  subcategories: string;
   images: {
     url: string;
   }[];

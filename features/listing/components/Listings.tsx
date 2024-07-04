@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getPriceString } from '../util/getPriceString';
-import { get } from 'http';
-import { getRegionLabelByValue, getMunicipalityLabelByValue } from '../util/getLabelByValue';
+import { getCategoryLabelByValue, getMunicipalityLabelByValue } from '../util/getLabelByValue';
 
 type Props = {
   listings: Listings;
@@ -28,9 +27,9 @@ export const Listings = ({ listings }: Props) => {
             </div>
           </div>
           <div className="flex items-center gap-1 pt-1 text-sm font-light text-primaryLight">
-            {getRegionLabelByValue(listing.region)}
-            <span className="text-[0.5rem]">•</span>
             {getMunicipalityLabelByValue(listing.municipality)}
+            <span className="text-[0.5rem]">•</span>
+            {getCategoryLabelByValue(listing.subcategories)}
           </div>
           <div className="text-sm font-medium line-clamp-2 overflow-ellipsis">{listing.title}</div>
         </Link>
