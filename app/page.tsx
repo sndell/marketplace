@@ -1,5 +1,7 @@
 import { Listings, getListings } from '@/features/listing';
 
+export const revaidate = 30;
+
 export default async function Home() {
   const listings = await getListings();
 
