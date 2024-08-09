@@ -6,10 +6,10 @@ export default async function Home() {
   const listings = await getListings();
 
   return listings ? (
-    <div className="max-w-7xl mx-auto p-3">
+    <div className="p-3 mx-auto max-w-7xl">
       <Listings listings={listings} />
     </div>
   ) : (
-    <div className="max-w-7xl mx-auto p-3">No listings found</div>
+    <div className="p-3 mx-auto max-w-7xl">No listings found</div>
   );
 }
