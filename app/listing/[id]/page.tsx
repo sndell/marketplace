@@ -7,7 +7,8 @@ import {
 } from '@/features/listing/util/getLabelByValue';
 import { getPriceString } from '@/util/getPriceString';
 
-export const revalidate = false;
+export const dynamic = 'auto';
+export const revalidate = 3600;
 
 export default async function Listing({ params }: { params: { id: string } }) {
   const listing = await getListingById(params.id);
