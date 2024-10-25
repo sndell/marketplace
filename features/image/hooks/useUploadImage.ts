@@ -48,6 +48,7 @@ export const useUploadImages = () => {
           fetch(data.signedUrls[index], {
             method: 'PUT',
             body: file,
+            mode: 'cors',
           }).then((res) => {
             if (!res.ok) throw new Error(`Failed to upload file ${file.name}`);
           })
