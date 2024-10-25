@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     const uploadedData = await prisma.image.createManyAndReturn({
       data: [
         ...validation.data.map((key) => ({
-          url: `${process.env.CLOUDFLARE_PUBLIC_URL}/${key}`,
+          url: `${process.env.CLOUDFLARE_PUBLIC_URL}/${process.env.CLOUDFLARE_BUCKET_NAME}/${key}`,
           creatorId: user.id,
         })),
       ],
