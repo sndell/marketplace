@@ -7,12 +7,12 @@ import {
 } from '@/features/listing/util/getLabelByValue';
 import { getPriceString } from '@/util/getPriceString';
 
+export const revalidate = false;
+
 export default async function Listing({ params }: { params: { id: string } }) {
   const listing = await getListingById(params.id);
 
   if (!listing) return <div className="text-center">Listing not found</div>;
-
-  console.log(listing.subcategory);
 
   return (
     <div className="grid grid-cols-2 p-3 mx-auto max-w-7xl gap-2">
