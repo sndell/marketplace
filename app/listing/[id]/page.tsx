@@ -8,7 +8,7 @@ import {
 import { getPriceString } from '@/util/getPriceString';
 
 export const dynamic = 'force-static';
-export const revalidate = 60;
+export const revalidate = false;
 
 export default async function Listing({ params }: { params: { id: string } }) {
   const listing = await getListingById(params.id);
