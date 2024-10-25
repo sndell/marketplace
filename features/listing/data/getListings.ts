@@ -1,3 +1,5 @@
+'server only';
+
 import { prisma } from '@/lib/prisma';
 
 export const getListings = async () => {
@@ -30,7 +32,7 @@ export const getListings = async () => {
     images: listing.ListingImage.map((image) => ({
       url: image.image.url,
     })),
-    subcategories: listing.subcategory,
+    subcategory: listing.subcategory,
   }));
 
   if (!listings || listings.length === 0) return null;
