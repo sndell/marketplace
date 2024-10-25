@@ -26,6 +26,7 @@ const config: Config = {
       },
       borderColor: {
         secondary: '#e4e4e4',
+        accent: '#F36F5D',
       },
       screens: {
         xs: '560px',
