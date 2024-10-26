@@ -17,14 +17,21 @@ const config: Config = {
         secondaryDark: '#ece7e7',
         background: '#FFFFFF',
       },
+      height: {
+        '18': '4.5rem',
+      },
+      width: {
+        '18': '4.5rem',
+      },
       textColor: {
         primary: '#000000',
-        primaryLight: '#909090',
+        primaryLight: '#646464',
         secondary: '#ffffff',
         accent: '#F36F5D',
         error: '#ff3d23',
       },
       borderColor: {
+        primary: '#ffffff',
         secondary: '#e4e4e4',
         accent: '#F36F5D',
       },

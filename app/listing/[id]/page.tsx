@@ -1,11 +1,7 @@
 import { ListingImages, getListingById } from '@/features/listing';
-import {
-  getMainCategoryLabelByValue,
-  getMunicipalityLabelByValue,
-  getRegionLabelByValue,
-  getSubcategoryLabelByValue,
-} from '@/features/listing/util/getLabelByValue';
+import { getMunicipalityLabelByValue, getRegionLabelByValue } from '@/features/listing/util/getLabelByValue';
 import { getPriceString } from '@/util/getPriceString';
+import Image from 'next/image';
 
 export const dynamic = 'force-static';
 export const revalidate = false;
@@ -13,36 +9,52 @@ export const revalidate = false;
 export default async function Listing({ params }: { params: { id: string } }) {
   const listing = await getListingById(params.id);
 
-  if (!listing) return <div className="text-center">Listing not found</div>;
+  if (!listing) {
+    return <div className="text-center">Listing not found</div>;
+  }
 
   return (
-    <div className="grid grid-cols-2 p-3 mx-auto max-w-7xl gap-2">
-      <div className="space-y-2">
-        <ListingImages images={listing.images} />
-        <div className="flex gap-3">
-          <span className="text-sm flex items-center gap-1">
-            <span className="icon-[solar--map-point-linear]" />
-            {getRegionLabelByValue(listing.region)}, {getMunicipalityLabelByValue(listing.municipality)}
-          </span>
-          <span className="text-sm flex items-center gap-1">
-            <span className="icon-[solar--filters-linear]" />
-            {getMainCategoryLabelByValue(listing.mainCategory)}, {getSubcategoryLabelByValue(listing.subcategory)}
-          </span>
-          <span className="text-sm flex items-center gap-1">
-            <span className="icon-[solar--clock-circle-linear]" />
-            {listing.createdAt.toDateString()}
-          </span>
+    <main className="grid min-[816px]:grid-cols-[55%_auto] gap-3 p-3 mx-auto max-w-7xl">
+      <ListingImages images={listing.images} />
+      <section className="space-y-4">
+        <h1 className="text-3xl">{listing.title}</h1>
+
+        {/* Price Section */}
+        <div>
+          <div>Pris</div>
+          <div className="text-2xl font-bold">{getPriceString(listing.price)}</div>
         </div>
-      </div>
-      {/* <div >{listing.description}</div> */}
-      <div className="space-y-2">
-        <div className="text-2xl">{listing.title}</div>
-        <div className="text-2xl font-bold">{getPriceString(listing.price)}</div>
-        <div className="whitespace-pre-wrap">
-          <div className="font-bold">Beskrivning</div>
-          {listing.description}
+
+        {/* Message Button */}
+        <button className="flex items-center justify-center w-full gap-4 py-3 text-white bg-accent rounded-xl">
+          <span className="icon-[solar--chat-line-outline] text-2xl" />
+          Skicka ett meddelande
+        </button>
+
+        <div className="w-full h-[1px] bg-secondaryDark" />
+
+        {/* Description */}
+        <div className="whitespace-pre-wrap  text-primaryLight">{listing.description}</div>
+
+        {/* Location */}
+        <span className="flex items-center gap-1 pt-1 text-accent">
+          <span className="icon-[solar--point-on-map-linear] text-xl" />
+          {getRegionLabelByValue(listing.region)}, {getMunicipalityLabelByValue(listing.municipality)}
+        </span>
+
+        <div className="w-full h-[1px] bg-secondaryDark" />
+
+        {/* Creator Profile */}
+        <div className="flex gap-2">
+          <Image src={listing.creator.photoURL} width={54} height={56} alt="Profile photo" className="rounded-full" />
+          <div className="flex flex-col justify-center">
+            <div className="flex gap-2">
+              <span>{listing.creator.displayName}</span>
+            </div>
+            <span className="text-sm text-primaryLight">Medlem sedan {listing.creator.memberSince}</span>
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
