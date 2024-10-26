@@ -63,15 +63,17 @@ export const RegisterForm = () => {
         registation={register('agreeToTerms')}
         error={errors.agreeToTerms}
         label={
-          <div className="text-sm py-1">
+          <div className="py-1 text-sm">
             Jag godkänner{' '}
-            <button type="button" className="text-accent font-medium hover:underline">
+            <button type="button" className="font-medium text-accent hover:underline">
               användarvillkoren
             </button>
           </div>
         }
       />
-      <button className="h-10 text-sm rounded-full bg-accent text-secondary">Registrera</button>
+      <button className="grid h-10 rounded-full place-content-center bg-accent text-secondary">
+        {registerUser.isPending ? <span className="icon-[svg-spinners--3-dots-scale] text-3xl" /> : 'Registrera'}
+      </button>
     </motion.form>
   );
 };

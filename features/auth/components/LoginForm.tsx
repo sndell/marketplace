@@ -59,7 +59,9 @@ export const LoginForm = () => {
           Återställ
         </button>
       </div>
-      <button className="py-2 rounded-full bg-accent text-secondary">Login</button>
+      <button className="grid h-10 py-2 rounded-full place-content-center bg-accent text-secondary">
+        {login.isPending ? <span className="icon-[svg-spinners--3-dots-scale] text-3xl" /> : 'Login'}
+      </button>
     </motion.form>
   );
 };
