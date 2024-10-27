@@ -17,7 +17,7 @@ export default async function Listing({ params }: { params: { id: string } }) {
     <main className="grid min-[816px]:grid-cols-[55%_auto] gap-3 p-3 mx-auto max-w-7xl">
       <ListingImages images={listing.images} />
       <section className="space-y-4">
-        <h1 className="text-3xl">{listing.title}</h1>
+        <h1 className="text-3xl break-all hitespace-pre-wrap">{listing.title}</h1>
 
         {/* Price Section */}
         <div>
@@ -26,7 +26,7 @@ export default async function Listing({ params }: { params: { id: string } }) {
         </div>
 
         {/* Message Button */}
-        <button className="flex items-center justify-center w-full gap-4 py-3 text-white bg-accent rounded-xl">
+        <button className="flex items-center justify-center w-full gap-4 py-3 text-white bg-accent rounded-xl cursor-not-allowed">
           <span className="icon-[solar--chat-line-outline] text-2xl" />
           Skicka ett meddelande
         </button>
@@ -34,7 +34,7 @@ export default async function Listing({ params }: { params: { id: string } }) {
         <div className="w-full h-[1px] bg-secondaryDark" />
 
         {/* Description */}
-        <div className="whitespace-pre-wrap  text-primaryLight">{listing.description}</div>
+        <div className="whitespace-pre-wrap text-primaryLight break-all">{listing.description}</div>
 
         {/* Location */}
         <span className="flex items-center gap-1 pt-1 text-accent">

@@ -15,8 +15,8 @@ export const Listings = ({ listings }: Props) => {
           <div className="relative w-full overflow-hidden aspect-square rounded-xl group">
             <Image
               src={listing.images[0].url}
-              height={200}
-              width={200}
+              height={160}
+              width={160}
               alt="listing image"
               className="object-cover w-full h-full transition-transform duration-300 ease-in-out group-hover:scale-125"
             />
@@ -31,7 +31,9 @@ export const Listings = ({ listings }: Props) => {
             <span className="text-[0.5rem]">•</span>
             {getSubcategoryLabelByValue(listing.subcategory)}
           </div>
-          <div className="text-sm font-medium line-clamp-2 overflow-ellipsis">{listing.title}</div>
+          <div className="text-sm font-medium line-clamp-2 overflow-ellipsis hitespace-pre-wrap break-all">
+            {listing.title}
+          </div>
         </Link>
       ))}
     </div>
