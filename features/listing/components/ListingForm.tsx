@@ -8,9 +8,12 @@ import { Input, DualMenu, Textarea, MultipleImages } from '@/components/form';
 import { mainCategories, municipalities, regions, subcategories } from '@/features/listing/data/categoriesAndLocations';
 import { cn } from '@/util/cn';
 import { useNewListing } from '../hooks/useNewListing';
+import { useRouter } from 'next/navigation';
 
 export const ListingForm = () => {
   const newListing = useNewListing();
+  const router = useRouter();
+
   const {
     handleSubmit,
     register,
@@ -24,6 +27,7 @@ export const ListingForm = () => {
   const onSubmit = async (data: ListingValues) => {
     try {
       const res = await newListing.mutateAsync(data);
+      router.push(`/listing/${res.id}`);
       console.log(res);
     } catch (error) {
       console.error(error);
