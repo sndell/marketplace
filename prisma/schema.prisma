@@ -8,16 +8,18 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(cuid())
-  email           String    @unique
+  id              String     @id @default(cuid())
+  email           String     @unique
   displayName     String
   photoUrl        String
-  isEmailVerified Boolean   @default(false)
+  isEmailVerified Boolean    @default(false)
   password        String
-  createdAt       DateTime  @default(now())
+  createdAt       DateTime   @default(now())
   sessions        Session[]
   images          Image[]
   listings        Listing[]
+  messages        Message[]
+  chats           UserChat[]
 }
 
 model Session {
@@ -52,6 +54,7 @@ model Listing {
   creatorId    String
   creator      User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   ListingImage ListingImage[]
+  Chat         Chat[]
 }
 
 model ListingImage {
@@ -61,4 +64,35 @@ model ListingImage {
   image     Image   @relation(fields: [imageId], references: [id], onDelete: Cascade)
 
   @@id([listingId, imageId])
+}
+
+model Chat {
+  id        String     @id @default(cuid())
+  listingId String
+  listing   Listing    @relation(fields: [listingId], references: [id])
+  messages  Message[]
+  createdAt DateTime   @default(now())
+  users     UserChat[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  chatId    String
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([chatId, createdAt])
+  @@index([senderId])
+}
+
+model UserChat {
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@id([userId, chatId])
 }
