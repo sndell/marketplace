@@ -118,8 +118,8 @@ export const ListingImages = ({ images }: ListingImagesProps) => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={cn(
-          'relative overflow-hidden rounded-md flex-1 cursor-pointer',
-          !isFullscreen && 'border border-secondary'
+          'relative overflow-hidden rounded-md cursor-pointer',
+          !isFullscreen ? 'border border-secondary' : 'flex-1'
         )}
       >
         <AnimatePresence>
