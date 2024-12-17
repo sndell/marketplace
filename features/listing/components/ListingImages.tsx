@@ -109,8 +109,6 @@ export const ListingImages = ({ images }: ListingImagesProps) => {
     setSelectedImageIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
   };
 
-  const selectedImage = images[selectedImageIndex];
-
   return (
     <div className={cn('flex flex-col space-y-2', isFullscreen && 'fixed h-dvh flex inset-0 flex-col bg-black z-50')}>
       <div
@@ -132,22 +130,26 @@ export const ListingImages = ({ images }: ListingImagesProps) => {
           )}
         </AnimatePresence>
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={selectedImage.url}
-          alt="Main photo"
-          className={cn('object-contain absolute z-10 w-full h-full', !isFullscreen && 'aspect-[16/10] h-full')}
-        />
-
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={selectedImage.url}
-          alt="background photo"
+        <div
           className={cn(
-            'object-cover blur-2xl w-full h-full inset-0 bg-secondaryDark opacity-40',
+            'flex transition-transform duration-200 ease-in-out h-full w-full',
             !isFullscreen && 'aspect-[16/10]'
           )}
-        />
+          style={{ transform: `translateX(-${selectedImageIndex * 100}%)` }}
+        >
+          {images.map((image, index) => (
+            <div key={index} className="flex-shrink-0 w-full h-full">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={image.url} alt={`Photo ${index + 1}`} className="object-contain absolute z-10 w-full h-full" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={image.url}
+                alt={`Background ${index + 1}`}
+                className="object-cover blur-2xl w-full h-full inset-0 bg-secondaryDark opacity-40"
+              />
+            </div>
+          ))}
+        </div>
       </div>
       {/* Thumbnails */}
       {images.length > 1 && (
