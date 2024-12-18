@@ -1,9 +1,10 @@
-import { ListingImages, getListingById } from '@/features/listing';
-import { getMunicipalityLabelByValue, getRegionLabelByValue } from '@/features/listing/util/getLabelByValue';
-import { getPriceString } from '@/util/getPriceString';
-import Image from 'next/image';
+import { MessageButton } from "@/features/chat";
+import { ListingImages, getListingById } from "@/features/listing";
+import { getMunicipalityLabelByValue, getRegionLabelByValue } from "@/features/listing/util/getLabelByValue";
+import { getPriceString } from "@/util/getPriceString";
+import Image from "next/image";
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 export const revalidate = false;
 
 export default async function Listing({ params }: { params: { id: string } }) {
@@ -26,10 +27,7 @@ export default async function Listing({ params }: { params: { id: string } }) {
         </div>
 
         {/* Message Button */}
-        <button className="flex items-center justify-center w-full gap-4 py-3 text-white bg-accent rounded-xl cursor-not-allowed">
-          <span className="icon-[solar--chat-line-outline] text-2xl" />
-          Skicka ett meddelande
-        </button>
+        <MessageButton listingId={listing.id} />
 
         <div className="w-full h-[1px] bg-secondaryDark" />
 
