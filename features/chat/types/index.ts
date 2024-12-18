@@ -1,5 +1,6 @@
 type Chats = {
     id: string;
+    createdAt: Date;
     messages: {
         content: string;
         createdAt: Date;

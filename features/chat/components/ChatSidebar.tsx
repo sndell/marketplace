@@ -83,16 +83,16 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
   };
 
   const getLatestMessageTime = (chat: Chats[0]) => {
-    const lastMessage = chat.messages[0];
-    if (!lastMessage) return "No message";
-    const distance = formatDistanceToNowStrict(lastMessage.createdAt);
+    let timeStamp = chat.messages[0]?.createdAt;
+    if (!timeStamp) timeStamp = chat.createdAt;
+    const distance = formatDistanceToNowStrict(timeStamp);
     if (Number(distance) > 24 * 60 * 60 * 1000) {
-      return lastMessage.createdAt.toLocaleDateString("en", {
+      return timeStamp.toLocaleDateString("en", {
         month: "short",
         day: "numeric",
       });
     }
-    return lastMessage.createdAt.toLocaleString("en", {
+    return timeStamp.toLocaleString("en", {
       hour: "numeric",
       minute: "numeric",
       hour12: false,

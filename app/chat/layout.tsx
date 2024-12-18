@@ -24,6 +24,7 @@ export default async function ChatLayout({
     },
     select: {
       id: true,
+      createdAt: true,
       listing: {
         select: {
           title: true,
@@ -67,18 +68,15 @@ export default async function ChatLayout({
   }
 
   const sortedChats = chats.sort((a, b) => {
-    const aTime = a.messages?.[0]?.createdAt.getTime() ?? 0;
-    const bTime = b.messages?.[0]?.createdAt.getTime() ?? 0;
+    const aTime = a.messages?.[0]?.createdAt.getTime() ?? a.createdAt.getTime();
+    const bTime = b.messages?.[0]?.createdAt.getTime() ?? b.createdAt.getTime();
     return bTime - aTime;
   });
-
-  const noMessages = sortedChats.filter((chat) => chat.messages.length === 0);
-  const hasMessages = sortedChats.filter((chat) => chat.messages.length > 0);
 
   return (
     <div className="flex xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] max-w-7xl mx-auto">
       <AblyProvider>
-        <ChatSidebar chats={[...noMessages, ...hasMessages]} userId={user.id} />
+        <ChatSidebar chats={sortedChats} userId={user.id} />
         {children}
       </AblyProvider>
     </div>
