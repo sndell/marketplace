@@ -100,7 +100,12 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
   };
 
   return (
-    <div className="max-w-[400px] overflow-ellipsis whitespace-pre-wrap break-all flex flex-col p-2 border-r border-secondary">
+    <aside
+      className={cn(
+        "w-full md:max-w-96 overflow-ellipsis overflow-y-auto whitespace-pre-wrap break-all flex flex-col p-2 border-r border-secondary",
+        pathname.includes("/chat/") ? "max-md:hidden" : "block"
+      )}
+    >
       {chats.map((chat, index) => (
         <Link
           key={index}
@@ -113,18 +118,18 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
           <Image
             src={chat.listing.ListingImage[0].image.url}
             alt="preview"
-            className="object-cover aspect-square rounded-lg"
+            className="object-cover rounded-lg aspect-square"
             width={56}
             height={56}
           />
           <div className="w-full">
-            <div className="flex justify-between items-center gap-2">
+            <div className="flex gap-2 justify-between items-center">
               <div className="line-clamp-1">{chat.listing.title}</div>
-              <div className="text-sm text-primaryLight whitespace-nowrap flex-1 text-right">
+              <div className="flex-1 text-sm text-right whitespace-nowrap text-primaryLight">
                 {getLatestMessageTime(chat)}
               </div>
             </div>
-            <div className="flex justify-between items-center gap-2">
+            <div className="flex gap-2 justify-between items-center">
               <div className="text-primaryLight line-clamp-1">{getLatestMessageContent(chat)}</div>
               {unreadMessages[chat.id] > 0 && pathname !== `/chat/${chat.id}` && (
                 <div className="bg-accent text-white text-xs px-3 py-0.5  rounded-full">{unreadMessages[chat.id]}</div>
@@ -133,6 +138,6 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
           </div>
         </Link>
       ))}
-    </div>
+    </aside>
   );
 };

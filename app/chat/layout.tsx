@@ -60,7 +60,7 @@ export default async function ChatLayout({
 
   if (chats.length === 0) {
     return (
-      <div className="h-[calc(100vh-4rem)] w-full max-w-5xl flex items-center justify-center text-lg text-primaryLight">
+      <div className="flex justify-center items-center w-full max-w-5xl xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] text-lg text-primaryLight">
         No chats found
       </div>
     );
@@ -76,7 +76,7 @@ export default async function ChatLayout({
   const hasMessages = sortedChats.filter((chat) => chat.messages.length > 0);
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] max-w-7xl mx-auto">
+    <div className="flex xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] max-w-7xl mx-auto">
       <AblyProvider>
         <ChatSidebar chats={[...noMessages, ...hasMessages]} userId={user.id} />
         {children}

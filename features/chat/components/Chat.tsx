@@ -6,7 +6,8 @@ import { cn } from "@/util/cn";
 import { useMutation } from "@tanstack/react-query";
 import { User } from "lucia";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 type Message = {
@@ -80,9 +81,11 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
     }
   };
 
+  const router = useRouter();
+
   return (
-    <div className="w-full h-full flex flex-col overflow-hidden border-r border-secondary  max-md:absolute max-md:inset-0 max-md:z-50 max-md:bg-white">
-      <div className="border-b border-secondary p-2 flex gap-2 items-center">
+    <div className="flex overflow-hidden flex-col w-full h-full border-r border-secondary max-md:absolute max-md:inset-0 max-md:z-50 max-md:bg-white">
+      <div className="grid grid-cols-[auto_1fr_auto] gap-2 items-center p-2 border-b border-secondary">
         <Image
           src={otherUser.photoUrl}
           width={40}
@@ -91,21 +94,24 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
           className="rounded-full aspect-square"
         />
         <div className="flex flex-col">
-          <div className="text-primary text-sm">{otherUser.displayName}</div>
-          <div className="text-primaryLight text-xs">
+          <div className="text-sm text-primary">{otherUser.displayName}</div>
+          <div className="text-xs text-primaryLight">
             Medlem sedan:{" "}
             {otherUser.createdAt.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" })}
           </div>
         </div>
+        <Link href="/chat" className="grid place-content-center h-full rounded-md bg-secondary aspect-square md:hidden">
+          <span className="icon-[clarity--close-line] text-2xl"></span>
+        </Link>
       </div>
-      <div className="flex items-center justify-between p-2 border-b border-secondary">
-        <div className="flex items-center space-x-2 overflow-hidden">
+      <div className="flex justify-between items-center p-2 border-b border-secondary">
+        <div className="flex overflow-hidden items-center space-x-2">
           <Image
             src={listing?.ListingImage[0]?.image.url || "/placeholder.jpg"}
             alt={listing?.title || "Listing image"}
             width={64}
             height={64}
-            className="rounded-md object-cover aspect-square"
+            className="object-cover rounded-md aspect-square"
           />
           <div>
             <h2 className="font-semibold line-clamp-2">{listing?.title}</h2>
@@ -115,12 +121,12 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
             </div>
           </div>
         </div>
-        <p className="font-bold text-primary whitespace-nowrap flex-1 text-right">
+        <p className="flex-1 font-bold text-right whitespace-nowrap text-primary">
           {listing?.price ? `${listing.price} kr` : "Pris ej angivet"}
         </p>
       </div>
 
-      <div ref={chatContainerRef} className="h-full overflow-y-auto flex flex-col gap-2 p-2">
+      <div ref={chatContainerRef} className="flex overflow-y-auto flex-col gap-2 p-2 h-full">
         {messages.map((message, index) => (
           <div key={index} className="space-y-1">
             <div className={cn("text-xs text-primaryLight", message.senderId === user?.id && "text-end")}>
@@ -145,19 +151,19 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
         ))}
         <div ref={bottomRef} />
       </div>
-      <div className="flex p-2 gap-2 border-t border-secondary">
+      <div className="flex gap-2 p-2 border-t border-secondary">
         <input
           type="text"
           value={currentMessage}
           placeholder="Type a message..."
           onChange={(e) => setCurrentMessage(e.target.value)}
           onKeyDown={handleKeyPress}
-          className="flex-1 appearance-none bg-secondary border border-secondary rounded-lg px-2 outline-none"
+          className="flex-1 px-2 rounded-lg border appearance-none outline-none bg-secondary border-secondary"
         />
         <button
           onClick={handleSendMessage}
           disabled={!currentMessage.trim() || mutation.isPending}
-          className="bg-accent px-2 flex items-center rounded-lg h-10 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center px-2 h-10 rounded-lg bg-accent disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span className="icon-[solar--plain-2-bold-duotone] text-secondary text-2xl h-full" />
         </button>
