@@ -98,7 +98,7 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
 };
 
 const ChatHeader = ({ otherUser }: { otherUser: ChatUser }) => (
-  <div className="absolute top-0 right-0 left-0 grid grid-cols-[1fr_auto] gap-2 mx-2 pt-2">
+  <div className="absolute top-0 right-0 left-0 grid grid-cols-[1fr_auto] gap-2 mx-2 pt-2 bg-gradient-to-b md:from-white to-100%">
     {/* <div className="flex flex-1 gap-2 items-center p-2 rounded-full backdrop-blur-md bg-primary/90">
       <Image
         src={listing?.ListingImage[0]?.image.url || "/placeholder.jpg"}
