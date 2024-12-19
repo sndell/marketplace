@@ -14,14 +14,12 @@ export default async function ChatLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] max-w-7xl mx-auto">
-      <AblyProvider>
-        <Suspense fallback={<ChatSidebarSkeleton />}>
-          <ChatSidebarWrapper />
-        </Suspense>
-        {children}
-      </AblyProvider>
-    </div>
+    <AblyProvider>
+      <Suspense fallback={<ChatSidebarSkeleton />}>
+        <ChatSidebarWrapper />
+      </Suspense>
+      {children}
+    </AblyProvider>
   );
 }
 
