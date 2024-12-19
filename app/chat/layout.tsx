@@ -3,8 +3,9 @@ import { ChatSidebar } from "@/features/chat";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AblyProvider } from "@/providers/AblyContext";
+import Link from "next/link";
 
-export const dynamicParams = false;
+export const revalidate = 0;
 
 export default async function ChatLayout({
   children,
@@ -61,8 +62,11 @@ export default async function ChatLayout({
 
   if (chats.length === 0) {
     return (
-      <div className="flex justify-center items-center w-full max-w-5xl xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] text-lg text-primaryLight">
-        No chats found
+      <div className="flex flex-col justify-center items-center w-full max-w-7xl mx-auto xs:h-[calc(100vh-4rem)] h-[calc(100dvh-10rem)] text-primaryLight text-center px-4">
+        Du har inga aktiva chattar. När du kontaktar en säljare kommer chatten att visas här.
+        <Link href="/" className="font-medium text-accent">
+          Visa annonser
+        </Link>
       </div>
     );
   }

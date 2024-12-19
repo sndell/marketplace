@@ -50,20 +50,9 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
   }, [chatId, user.id, subscribe]);
 
   useEffect(() => {
-    if (isInitialLoadRef.current && bottomRef.current) {
-      bottomRef.current.scrollIntoView();
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: isInitialLoadRef.current ? "auto" : "smooth" });
       isInitialLoadRef.current = false;
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isInitialLoadRef.current && bottomRef.current && chatContainerRef.current) {
-      const { scrollHeight, clientHeight, scrollTop } = chatContainerRef.current;
-      const isScrolledToBottom = scrollHeight - clientHeight <= scrollTop + 100;
-
-      if (isScrolledToBottom) {
-        bottomRef.current.scrollIntoView({ behavior: "smooth" });
-      }
     }
   }, [messages]);
 
@@ -99,26 +88,6 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
 
 const ChatHeader = ({ otherUser }: { otherUser: ChatUser }) => (
   <div className="absolute top-0 right-0 left-0 grid grid-cols-[1fr_auto] gap-2 mx-2 pt-2 bg-gradient-to-b md:from-white to-100%">
-    {/* <div className="flex flex-1 gap-2 items-center p-2 rounded-full backdrop-blur-md bg-primary/90">
-      <Image
-        src={listing?.ListingImage[0]?.image.url || "/placeholder.jpg"}
-        alt={listing?.title || "Listing image"}
-        width={44}
-        height={44}
-        className="rounded-full aspect-square"
-      />
-      <div className="flex flex-col">
-        <div className="text-primary line-clamp-1">{listing?.title}</div>
-        <div className="flex gap-1 text-sm text-primaryLight">
-          <p className="font-bold text-right whitespace-nowrap text-primary">
-            {listing?.price ? `${listing.price} kr` : "Pris ej angivet"}
-          </p>
-          <span className="px-1 text-sm font-normal text-black">•</span>
-          <p className="truncate">{getRegionLabelByValue(listing?.region)},</p>
-          <p className="truncate">{getMunicipalityLabelByValue(listing?.municipality)}</p>
-        </div>
-      </div>
-    </div> */}
     <div className="flex flex-1 gap-2 items-center p-2 rounded-full backdrop-blur-md bg-primary/90">
       <Image src={otherUser.photoUrl} width={44} height={44} alt="other user" className="rounded-full aspect-square" />
       <div className="flex flex-col">

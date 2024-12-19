@@ -1,26 +1,23 @@
-'use client';
+"use client";
 
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-type Props = {
-  listingId: string;
-};
+type Props = { listingId: string };
 
 export const MessageButton = ({ listingId }: Props) => {
   const router = useRouter();
   const mutation = useMutation({
-    mutationFn: (listingId: string) =>
-      fetch('/api/v1/chat/new', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ listingId }),
-      }).then((res) => res.json()),
-    onSuccess(data) {
-      router.push(data);
+    mutationFn: async (id: string) => {
+      const response = await fetch("/api/v1/chat/new", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ listingId: id }),
+      });
+      if (!response.ok) throw new Error("Failed to create chat");
+      return response.json();
     },
+    onSuccess: (data) => router.push(data),
   });
 
   return (

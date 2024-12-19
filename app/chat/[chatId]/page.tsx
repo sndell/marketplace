@@ -2,8 +2,6 @@ import { Chat } from "@/features/chat";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export const revalidate = 0;
-
 export default async function Page({ params }: { params: { chatId: string } }) {
   const chat = await prisma.chat.findFirst({
     where: {
