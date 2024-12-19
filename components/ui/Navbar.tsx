@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { cn } from '@/util/cn';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { AuthButton } from '../../features/auth';
+import { cn } from "@/util/cn";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+import { AuthButton } from "../../features/auth";
 
 type Link = {
   href: string;
@@ -13,10 +13,10 @@ type Link = {
 };
 
 const links: Link[] = [
-  { href: '/', label: 'Hem', icon: 'icon-[solar--home-2-linear]' },
-  { href: '/chat', label: 'Chatt', icon: 'icon-[solar--chat-line-linear]' },
-  { href: '/saved', label: 'Sparat', icon: 'icon-[solar--bookmark-linear]' },
-  { href: '/listing/new', label: 'Ny annons', icon: 'icon-[solar--add-square-linear]' },
+  { href: "/", label: "Hem", icon: "icon-[solar--home-2-linear]" },
+  { href: "/chat", label: "Chatt", icon: "icon-[solar--chat-line-linear]" },
+  { href: "/saved", label: "Sparat", icon: "icon-[solar--bookmark-linear]" },
+  { href: "/listing/new", label: "Ny annons", icon: "icon-[solar--add-square-linear]" },
 ];
 
 export const Navbar = () => {
@@ -33,21 +33,21 @@ export const Navbar = () => {
 };
 
 const NavLink = ({ href, icon, label, path }: Link & { path: string }) => {
-  const isActive = path === href;
+  const isActive = href === "/" ? path === href : path.startsWith(href);
 
   return (
     <Link
       href={href}
-      className={cn('relative flex items-center gap-2 rounded-full max-xs:px-3 max-xs:py-2 group whitespace-nowrap')}
+      className={cn("relative flex items-center gap-2 rounded-full max-xs:px-3 max-xs:py-2 group whitespace-nowrap")}
     >
       <span
         className={cn(
-          'max-[380px]:text-2xl text-3xl xs:text-2xl transition-colors group-hover:text-accent',
-          isActive && 'text-accent',
+          "max-[380px]:text-2xl text-3xl xs:text-2xl transition-colors group-hover:text-accent",
+          isActive && "text-accent",
           icon
         )}
       />
-      <span className={cn('max-xs:hidden', isActive && 'max-xs:text-accent max-xs:inline max-[380px]:text-sm')}>
+      <span className={cn("max-xs:hidden", isActive && "max-xs:text-accent max-xs:inline max-[380px]:text-sm")}>
         {label}
       </span>
       {isActive && (
