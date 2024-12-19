@@ -45,10 +45,10 @@ export default async function Page({ params }: { params: { chatId: string } }) {
     },
   });
 
-  if (!chat) return <div>Chat not found</div>;
+  if (!chat) return null;
 
   const otherUser = chat.users.find((chatUser) => chatUser.user.id !== user.id)?.user;
-  if (!otherUser) return <div>nah wtf?</div>;
+  if (!otherUser) return null;
 
   return (
     <Chat
