@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { ChatSkeleton } from "./ChatSkeleton";
 
 type Message = {
   senderId: string;
@@ -26,10 +27,10 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
   const [currentMessage, setCurrentMessage] = useState("");
   const { chatId } = useParams<{ chatId: string }>();
   const [messages, setMessages] = useState<Message[]>(serverMessages);
+  const [isLoaded, setIsLoaded] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const { subscribe } = useAbly();
-  const isInitialLoadRef = useRef(true);
 
   const mutation = useMutation({
     mutationFn: (message: string) =>
@@ -42,7 +43,7 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
   useEffect(() => {
     const unsubscribe = subscribe(`chat:${user.id}`, "message", (message) => {
       if (message.data.chatId === chatId) {
-        setMessages((prevMessages) => [...prevMessages, { ...message.data, createdAt: new Date(message.timestamp) }]);
+        setMessages((prev) => [...prev, { ...message.data, createdAt: new Date(message.timestamp) }]);
       }
     });
 
@@ -51,10 +52,10 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
 
   useEffect(() => {
     if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: isInitialLoadRef.current ? "auto" : "smooth" });
-      isInitialLoadRef.current = false;
+      bottomRef.current.scrollIntoView({ behavior: isLoaded ? "smooth" : "auto" });
+      if (!isLoaded) setIsLoaded(true);
     }
-  }, [messages]);
+  }, [messages, isLoaded]);
 
   const handleSendMessage = async () => {
     if (!currentMessage.trim() || mutation.isPending) return;
@@ -70,19 +71,30 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
   };
 
   return (
-    <div className="flex overflow-hidden relative flex-col w-full h-full max-md:absolute max-md:inset-0 max-md:z-50 max-md:bg-white">
-      <div ref={chatContainerRef} className="flex overflow-y-auto flex-col gap-2 p-2 pt-36 h-full scrollbar-slim pb-18">
-        <ChatHeader otherUser={otherUser} />
-        <MessageList messages={messages} user={user} />
-        <div ref={bottomRef} />
-        <MessageInput
-          handleSendMessage={handleSendMessage}
-          handleKeyPress={handleKeyPress}
-          currentMessage={currentMessage}
-          setCurrentMessage={setCurrentMessage}
-        />
+    <>
+      {!isLoaded && <ChatSkeleton />}
+      <div
+        className={cn(
+          "flex overflow-hidden relative flex-col w-full h-full max-md:absolute max-md:inset-0 max-md:z-50 max-md:bg-white",
+          !isLoaded && "invisible w-0"
+        )}
+      >
+        <div
+          ref={chatContainerRef}
+          className="flex overflow-y-auto flex-col gap-2 p-2 pt-36 h-full scrollbar-slim pb-18"
+        >
+          <ChatHeader otherUser={otherUser} />
+          <MessageList messages={messages} user={user} />
+          <div ref={bottomRef} />
+          <MessageInput
+            handleSendMessage={handleSendMessage}
+            handleKeyPress={handleKeyPress}
+            currentMessage={currentMessage}
+            setCurrentMessage={setCurrentMessage}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -102,7 +114,7 @@ const ChatHeader = ({ otherUser }: { otherUser: ChatUser }) => (
       href="/chat"
       className="grid place-content-center h-full rounded-full backdrop-blur-xl bg-background/10 aspect-square md:hidden"
     >
-      <span className="icon-[clarity--close-line] text-4xl"></span>
+      <span className="icon-[clarity--close-line] text-4xl" />
     </Link>
   </div>
 );
@@ -144,24 +156,22 @@ const MessageInput = ({
   handleKeyPress: (e: React.KeyboardEvent) => void;
   currentMessage: string;
   setCurrentMessage: (message: string) => void;
-}) => {
-  return (
-    <div className="flex absolute right-0 bottom-0 left-0 gap-2 p-3 max-md:backdrop-blur-md max-md:bg-primary/90 bg-gradient-to-t md:from-white to-90%">
-      <input
-        type="text"
-        value={currentMessage}
-        placeholder="Type a message..."
-        onChange={(e) => setCurrentMessage(e.target.value)}
-        onKeyDown={handleKeyPress}
-        className="flex-1 px-4 py-3 rounded-full appearance-none outline-none md:border md:border-secondary bg-background"
-      />
-      <button
-        onClick={handleSendMessage}
-        disabled={!currentMessage.trim()}
-        className="flex justify-center items-center px-2 h-12 rounded-full backdrop-blur-md aspect-square bg-accent disabled:bg-accent/50 disabled:cursor-not-allowed"
-      >
-        <span className="icon-[solar--plain-outline] text-secondary text-2xl h-full" />
-      </button>
-    </div>
-  );
-};
+}) => (
+  <div className="flex absolute right-0 bottom-0 left-0 gap-2 p-3 max-md:backdrop-blur-md max-md:bg-primary/90 bg-gradient-to-t md:from-white to-90%">
+    <input
+      type="text"
+      value={currentMessage}
+      placeholder="Type a message..."
+      onChange={(e) => setCurrentMessage(e.target.value)}
+      onKeyDown={handleKeyPress}
+      className="flex-1 px-4 py-3 rounded-full appearance-none outline-none md:border md:border-secondary bg-background"
+    />
+    <button
+      onClick={handleSendMessage}
+      disabled={!currentMessage.trim()}
+      className="flex justify-center items-center px-2 h-12 rounded-full backdrop-blur-md aspect-square bg-accent disabled:bg-accent/50 disabled:cursor-not-allowed"
+    >
+      <span className="icon-[solar--plain-outline] text-secondary text-2xl h-full" />
+    </button>
+  </div>
+);
