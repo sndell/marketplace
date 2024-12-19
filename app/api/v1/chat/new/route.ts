@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   });
 
   if (existingChat && existingChat.users.some(({ userId }) => userId === listing.creatorId)) {
-    return NextResponse.json(`/chat/`, { status: 200 });
+    return NextResponse.json(`/chat/${existingChat.id}`, { status: 200 });
   }
 
   const chat = await prisma.chat.create({
@@ -34,5 +34,5 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return NextResponse.json(`/chat`, { status: 200 });
+  return NextResponse.json(`/chat/${chat.id}`, { status: 200 });
 }
