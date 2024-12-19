@@ -1,3 +1,5 @@
+import { config } from 'process';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -16,6 +18,21 @@ const nextConfig = {
       },
     ],
   },
+  // webpack: (config, { isServer }) => {
+  //   // Add fallback for 'encoding' module
+  //   config.resolve.fallback = {
+  //     ...config.resolve.fallback,
+  //     encoding: false,
+  //   };
+
+  //   // Ignore the keyv warning
+  //   config.ignoreWarnings = [
+  //     { module: /node_modules\/keyv/ },
+  //   ];
+
+  //   return config;
+  // },
 };
 
 export default nextConfig;
+

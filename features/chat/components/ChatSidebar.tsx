@@ -102,7 +102,7 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
   return (
     <aside
       className={cn(
-        "w-full md:max-w-96 overflow-ellipsis overflow-y-auto whitespace-pre-wrap break-all flex flex-col p-2 border-r border-secondary",
+        "w-full md:max-w-96 overflow-ellipsis overflow-y-auto scrollbar-slim whitespace-pre-wrap break-all flex flex-col p-2 border-r border-secondary",
         pathname.includes("/chat/") ? "max-md:hidden" : "block"
       )}
     >
