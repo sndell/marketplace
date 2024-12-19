@@ -1,9 +1,10 @@
+import { AblyProvider } from "@/providers/AblyContext";
+import { Suspense } from "react";
 import { NotLoggedInMessage } from "@/features/auth";
-import { ChatSidebar } from "@/features/chat";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { AblyProvider } from "@/providers/AblyContext";
 import Link from "next/link";
+import { ChatSidebar, ChatSidebarSkeleton } from "@/features/chat";
 
 export const revalidate = 0;
 
@@ -12,6 +13,19 @@ export default async function ChatLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  return (
+    <div className="flex xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] max-w-7xl mx-auto">
+      <AblyProvider>
+        <Suspense fallback={<ChatSidebarSkeleton />}>
+          <ChatSidebarWrapper />
+        </Suspense>
+        {children}
+      </AblyProvider>
+    </div>
+  );
+}
+
+const ChatSidebarWrapper = async () => {
   const { user } = await validateRequest();
   if (!user) return <NotLoggedInMessage />;
 
@@ -77,12 +91,5 @@ export default async function ChatLayout({
     return bTime - aTime;
   });
 
-  return (
-    <div className="flex xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] max-w-7xl mx-auto">
-      <AblyProvider>
-        <ChatSidebar chats={sortedChats} userId={user.id} />
-        {children}
-      </AblyProvider>
-    </div>
-  );
-}
+  return <ChatSidebar chats={sortedChats} userId={user.id} />;
+};

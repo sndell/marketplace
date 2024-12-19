@@ -3,6 +3,9 @@ import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 export default async function Page({ params }: { params: { chatId: string } }) {
+  const { user } = await validateRequest();
+  if (!user) return <div>nah wtf?</div>;
+
   const chat = await prisma.chat.findFirst({
     where: {
       id: params.chatId,
@@ -42,8 +45,7 @@ export default async function Page({ params }: { params: { chatId: string } }) {
     },
   });
 
-  const { user } = await validateRequest();
-  if (!user || !chat) return <div>nah wtf?</div>;
+  if (!chat) return <div>Chat not found</div>;
 
   const otherUser = chat.users.find((chatUser) => chatUser.user.id !== user.id)?.user;
   if (!otherUser) return <div>nah wtf?</div>;
