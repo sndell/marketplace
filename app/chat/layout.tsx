@@ -13,11 +13,14 @@ export default async function ChatLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { user } = await validateRequest();
+  if (!user) return <NotLoggedInMessage />;
+
   return (
-    <div className="flex">
+    <div className="flex xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] max-w-7xl mx-auto">
       <AblyProvider>
         <Suspense fallback={<ChatSidebarSkeleton />}>
-          <ChatSidebarWrapper />
+          <ChatSidebarWrapper userId={user.id} />
         </Suspense>
         {children}
       </AblyProvider>
@@ -25,15 +28,12 @@ export default async function ChatLayout({
   );
 }
 
-const ChatSidebarWrapper = async () => {
-  const { user } = await validateRequest();
-  if (!user) return <NotLoggedInMessage />;
-
+const ChatSidebarWrapper = async ({ userId }: { userId: string }) => {
   const chats = await prisma.chat.findMany({
     where: {
       users: {
         some: {
-          userId: user.id,
+          userId,
         },
       },
     },
@@ -76,7 +76,7 @@ const ChatSidebarWrapper = async () => {
 
   if (chats.length === 0) {
     return (
-      <div className="flex flex-col justify-center items-center w-full max-w-7xl mx-auto xs:h-[calc(100vh-4rem)] h-[calc(100dvh-10rem)] text-primaryLight text-center px-4">
+      <div className="w-full">
         Du har inga aktiva chattar. När du kontaktar en säljare kommer chatten att visas här.
         <Link href="/" className="font-medium text-accent">
           Visa annonser
@@ -91,5 +91,5 @@ const ChatSidebarWrapper = async () => {
     return bTime - aTime;
   });
 
-  return <ChatSidebar chats={sortedChats} userId={user.id} />;
+  return <ChatSidebar chats={sortedChats} userId={userId} />;
 };
