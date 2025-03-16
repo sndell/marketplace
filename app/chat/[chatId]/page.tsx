@@ -2,15 +2,15 @@ import { Chat } from "@/features/chat";
 import { validateRequest } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export default async function Page({ params }: { params: Promise<{ chatId: string }> }) {
+export default async function Page(props: { params: Promise<{ chatId: string }> }) {
   const { user } = await validateRequest();
   if (!user) return <div>nah wtf?</div>;
 
-  const { chatId } = await params;
+  const params = await props.params;
 
   const chat = await prisma.chat.findFirst({
     where: {
-      id: chatId,
+      id: params.chatId,
     },
     select: {
       messages: true,
