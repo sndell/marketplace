@@ -34,7 +34,7 @@ model Session {
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 
   @@index([userId])
-  @@index([expiresAt]) // To clean expired sessions
+  @@index([expiresAt])
 }
 
 model Image {
@@ -47,7 +47,7 @@ model Image {
   ListingImage ListingImage[]
 
   @@index([creatorId])
-  @@index([deletedAt]) // For filtering out deleted images
+  @@index([deletedAt])
 }
 
 model Listing {
@@ -67,10 +67,10 @@ model Listing {
   Chat         Chat[]
 
   @@index([creatorId])
-  @@index([mainCategory, subcategory]) // For category filtering
-  @@index([region, municipality]) // For location filtering
-  @@index([createdAt]) // For sorting by newest
-  @@index([price]) // For price filtering/sorting
+  @@index([mainCategory, subcategory])
+  @@index([region, municipality])
+  @@index([createdAt])
+  @@index([price])
 }
 
 model ListingImage {
@@ -93,7 +93,7 @@ model Chat {
   userReads UserChatRead[]
 
   @@index([listingId])
-  @@index([createdAt]) // For sorting chats by newest
+  @@index([createdAt])
 }
 
 model Message {
@@ -105,9 +105,9 @@ model Message {
   content   String
   createdAt DateTime @default(now())
 
-  @@index([chatId, createdAt]) // For fetching messages in a chat ordered by time
+  @@index([chatId, createdAt])
   @@index([senderId])
-  @@index([createdAt]) // For general timeline queries
+  @@index([createdAt])
 }
 
 model UserChat {
@@ -117,8 +117,8 @@ model UserChat {
   chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
   @@id([userId, chatId])
-  @@index([chatId]) // To find all users in a chat
-  @@index([userId]) // To find all chats for a user
+  @@index([chatId])
+  @@index([userId])
 }
 
 model UserChatRead {
@@ -132,5 +132,5 @@ model UserChatRead {
   @@unique([userId, chatId])
   @@index([userId])
   @@index([chatId])
-  @@index([lastReadAt]) // For finding unread messages
+  @@index([lastReadAt])
 }
