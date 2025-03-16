@@ -112,9 +112,7 @@ const ChatSidebarWrapper = async ({ userId }: { userId: string }) => {
     const unreadCount = chat.messages.filter(
       (message) => message.createdAt > lastReadAt && message.sender.id !== userId
     ).length;
-
-    // Get the other user in the chat
-    const otherUser = chat.users.find((userChat) => userChat.userId !== userId)?.user;
+    const otherUser = chat.users.find((userChat) => userChat.userId !== userId)?.user || null;
 
     return {
       ...chat,
@@ -125,8 +123,11 @@ const ChatSidebarWrapper = async ({ userId }: { userId: string }) => {
 
   // Sort chats by the latest message or creation date (in descending order)
   const sortedChats = updatedChats.sort((a, b) => {
-    const aTime = a.messages?.[0]?.createdAt.getTime() ?? a.createdAt.getTime();
-    const bTime = b.messages?.[0]?.createdAt.getTime() ?? b.createdAt.getTime();
+    const aMessage = a.messages[0];
+    const bMessage = b.messages[0];
+
+    const aTime = aMessage?.createdAt.getTime() ?? a.createdAt.getTime();
+    const bTime = bMessage?.createdAt.getTime() ?? b.createdAt.getTime();
     return bTime - aTime;
   });
 
