@@ -131,6 +131,7 @@ const ChatLink = ({
   return (
     <Link
       href={`/chat/${chat.id}`}
+      prefetch={true}
       className={cn(
         "flex items-center gap-2 p-2 hover:bg-secondary rounded-lg transition-colors",
         isActive && "bg-secondary"
