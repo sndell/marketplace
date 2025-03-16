@@ -20,7 +20,10 @@ model User {
   listings        Listing[]
   messages        Message[]
   chats           UserChat[]
-  chatReads       UserChatRead[] // New relation to track read status
+  chatReads       UserChatRead[]
+
+  @@index([email])
+  @@index([createdAt])
 }
 
 model Session {
@@ -29,6 +32,9 @@ model Session {
   createdAt DateTime @default(now())
   expiresAt DateTime
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt]) // To clean expired sessions
 }
 
 model Image {
@@ -39,6 +45,9 @@ model Image {
   deletedAt    DateTime?
   user         User           @relation(fields: [creatorId], references: [id])
   ListingImage ListingImage[]
+
+  @@index([creatorId])
+  @@index([deletedAt]) // For filtering out deleted images
 }
 
 model Listing {
@@ -56,6 +65,12 @@ model Listing {
   creator      User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   ListingImage ListingImage[]
   Chat         Chat[]
+
+  @@index([creatorId])
+  @@index([mainCategory, subcategory]) // For category filtering
+  @@index([region, municipality]) // For location filtering
+  @@index([createdAt]) // For sorting by newest
+  @@index([price]) // For price filtering/sorting
 }
 
 model ListingImage {
@@ -65,6 +80,7 @@ model ListingImage {
   image     Image   @relation(fields: [imageId], references: [id], onDelete: Cascade)
 
   @@id([listingId, imageId])
+  @@index([imageId])
 }
 
 model Chat {
@@ -74,7 +90,10 @@ model Chat {
   messages  Message[]
   createdAt DateTime       @default(now())
   users     UserChat[]
-  userReads UserChatRead[] // New relation for read status
+  userReads UserChatRead[]
+
+  @@index([listingId])
+  @@index([createdAt]) // For sorting chats by newest
 }
 
 model Message {
@@ -86,8 +105,9 @@ model Message {
   content   String
   createdAt DateTime @default(now())
 
-  @@index([chatId, createdAt])
+  @@index([chatId, createdAt]) // For fetching messages in a chat ordered by time
   @@index([senderId])
+  @@index([createdAt]) // For general timeline queries
 }
 
 model UserChat {
@@ -97,9 +117,10 @@ model UserChat {
   chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
   @@id([userId, chatId])
+  @@index([chatId]) // To find all users in a chat
+  @@index([userId]) // To find all chats for a user
 }
 
-// New model to track read status per user per chat
 model UserChatRead {
   id         String   @id @default(cuid())
   userId     String
@@ -111,4 +132,5 @@ model UserChatRead {
   @@unique([userId, chatId])
   @@index([userId])
   @@index([chatId])
+  @@index([lastReadAt]) // For finding unread messages
 }
