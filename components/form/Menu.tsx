@@ -1,8 +1,8 @@
-import { cn } from '@/util/cn';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
-import { Control, FieldError, useController } from 'react-hook-form';
-import { useOnClickOutside } from 'usehooks-ts';
+import { cn } from "@/util/cn";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { Control, FieldError, useController } from "react-hook-form";
+import { useOnClickOutside } from "usehooks-ts";
 
 type Props = {
   control: Control<any>;
@@ -37,7 +37,7 @@ export const Menu = ({
   } = useController({ name, control });
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef(null as unknown as HTMLButtonElement);
   useOnClickOutside(ref, () => setIsMenuOpen(false));
 
   const handleClick = (value: string) => {
@@ -49,11 +49,11 @@ export const Menu = ({
   };
 
   useEffect(() => {
-    if (!options.find((option) => option.value === value)) onChange('');
+    if (!options.find((option) => option.value === value)) onChange("");
   }, [options]);
 
   return (
-    <label className={cn(isDisabled && 'opacity-50')}>
+    <label className={cn(isDisabled && "opacity-50")}>
       {!isLabelInner && (
         <div className="pt-1 text-sm font-medium">
           {label}
@@ -67,8 +67,8 @@ export const Menu = ({
         type="button"
         ref={ref}
         className={cn(
-          'relative flex items-center justify-between w-full px-3 py-2 border bg-secondary text-start rounded-xl border-secondary',
-          isDisabled && 'cursor-not-allowed'
+          "relative flex items-center justify-between w-full px-3 py-2 border bg-secondary text-start rounded-xl border-secondary",
+          isDisabled && "cursor-not-allowed"
         )}
       >
         <div>
@@ -86,12 +86,12 @@ export const Menu = ({
             <motion.div
               initial={{ maxHeight: 0 }}
               animate={{
-                maxHeight: maxHeight ? maxHeight : 'auto',
+                maxHeight: maxHeight ? maxHeight : "auto",
               }}
               exit={{ maxHeight: 0 }}
-              transition={{ ease: 'easeInOut', duration: 0.1 }}
+              transition={{ ease: "easeInOut", duration: 0.1 }}
               className={cn(
-                'absolute left-0 w-full z-10 overflow-y-auto border top-[calc(100%+4px)] rounded-xl bg-secondary shadow-lg border-secondary',
+                "absolute left-0 w-full z-10 overflow-y-auto border top-[calc(100%+4px)] rounded-xl bg-secondary shadow-lg border-secondary",
                 maxHeight && `max-h-[${maxHeight}px]`
               )}
             >
