@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={cn("max-[380px]:pb-16 max-xs:pb-18", inter.className)}>
         <Providers>
           <Header />
-          {children}
+          <div className="max-xs:mt-16">{children}</div>
         </Providers>
       </body>
     </html>

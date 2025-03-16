@@ -99,7 +99,7 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
       >
         <div
           ref={chatContainerRef}
-          className="flex flex-col h-full gap-2 p-2 overflow-y-auto pt-36 scrollbar-slim pb-18"
+          className="flex flex-col h-full gap-2 p-2 pt-20 overflow-y-auto scrollbar-slim pb-18"
         >
           <ChatHeader otherUser={otherUser} />
           <MessageList messages={messages} user={user} />

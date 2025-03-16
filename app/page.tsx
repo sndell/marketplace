@@ -6,7 +6,7 @@ export default async function Home() {
   const listings = await getListings();
 
   return listings ? (
-    <div className="p-3 mx-auto mt-18 max-w-7xl">
+    <div className="p-3 mx-auto max-w-7xl">
       <Listings listings={listings} />
     </div>
   ) : (

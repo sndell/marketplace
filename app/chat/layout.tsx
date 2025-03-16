@@ -18,7 +18,7 @@ export default async function ChatLayout({
   if (!user) return <NotLoggedInMessage />;
 
   return (
-    <div className="flex xs:h-[calc(100vh-4rem)] h-calc-[(100dvh-6rem)] max-w-7xl mx-auto">
+    <div className="flex xs:h-[calc(100vh-4.25rem)] h-calc-[(100dvh-6rem)] max-w-7xl mx-auto">
       <AblyProvider>
         <Suspense fallback={<ChatSidebarSkeleton />}>
           <ChatSidebarWrapper userId={user.id} />
