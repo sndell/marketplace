@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
     const session = await lucia.createSession(user.id, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     return Response.json({ message: 'Login successful' }, { status: 201 });
   } catch (error) {
     return Response.json({ error: 'internal-server-error', message: 'Internal server error' }, { status: 500 });

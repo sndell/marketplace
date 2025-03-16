@@ -7,7 +7,8 @@ import Image from "next/image";
 export const dynamic = "force-static";
 export const revalidate = false;
 
-export default async function Listing({ params }: { params: { id: string } }) {
+export default async function Listing(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const listing = await getListingById(params.id);
 
   if (!listing) {

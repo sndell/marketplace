@@ -7,7 +7,7 @@ export async function POST() {
     if (!session) return Response.json({ error: 'not-logged-in', message: 'You are not logged in' }, { status: 401 });
     await lucia.invalidateSession(session.id);
     const sessionCookie = lucia.createBlankSessionCookie();
-    cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+    (await cookies()).set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
     return Response.json({ message: 'Logout successful' }, { status: 200 });
   } catch (error) {
     return Response.json({ error: 'internal-server-error', message: 'Internal server error' }, { status: 500 });
