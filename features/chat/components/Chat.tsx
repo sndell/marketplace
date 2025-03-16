@@ -40,10 +40,28 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
       }),
   });
 
+  const markAsReadMutation = useMutation({
+    mutationFn: () =>
+      fetch("/api/v1/message/read", {
+        method: "POST",
+        body: JSON.stringify({ chatId }),
+      }),
+  });
+
+  useEffect(() => {
+    if (chatId) {
+      markAsReadMutation.mutate();
+    }
+  }, [chatId]);
+
   useEffect(() => {
     const unsubscribe = subscribe(`chat:${user.id}`, "message", (message) => {
       if (message.data.chatId === chatId) {
         setMessages((prev) => [...prev, { ...message.data, createdAt: new Date(message.timestamp) }]);
+      }
+
+      if (message.data.senderId !== user.id) {
+        markAsReadMutation.mutate();
       }
     });
 
@@ -100,7 +118,7 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
 
 const ChatHeader = ({ otherUser }: { otherUser: ChatUser }) => (
   <div className="absolute top-0 right-0 left-0 grid grid-cols-[1fr_auto] gap-2 mx-2 pt-2 bg-linear-to-b md:from-white to-100%">
-    <div className="flex flex-1 gap-2 items-center p-2 rounded-full backdrop-blur-md bg-primary/90">
+    <div className="flex flex-1 gap-2 items-center p-2 rounded-full backdrop-blur-xs bg-primary/90">
       <Image src={otherUser.photoUrl} width={44} height={44} alt="other user" className="rounded-full aspect-square" />
       <div className="flex flex-col">
         <div className="text-primary">{otherUser.displayName}</div>

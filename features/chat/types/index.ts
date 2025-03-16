@@ -1,39 +1,40 @@
 type Chats = {
-    id: string;
+  id: string;
+  createdAt: Date;
+  messages: {
+    content: string;
     createdAt: Date;
-    messages: {
-        content: string;
-        createdAt: Date;
-        sender: {
-            displayName: string;
-            id: string;
-        };
-    }[];
-    listing: {
-        title: string;
-        ListingImage: {
-            image: {
-                url: string;
-            };
-        }[];
+    sender: {
+      displayName: string;
+      id: string;
     };
-}[]
+  }[];
+  listing: {
+    title: string;
+    ListingImage: {
+      image: {
+        url: string;
+      };
+    }[];
+  };
+  unreadCount: number;
+}[];
 
 type ChatUser = {
-    displayName: string;
-    photoUrl: string;
-    id: string;
-    createdAt: Date;
-}
+  displayName: string;
+  photoUrl: string;
+  id: string;
+  createdAt: Date;
+};
 
 type ChatListing = {
-    title: string;
-    price: number;
-    region: string;
-    municipality: string;
-    ListingImage: {
-        image: {
-            url: string;
-        };
-    }[];
-}
+  title: string;
+  price: number;
+  region: string;
+  municipality: string;
+  ListingImage: {
+    image: {
+      url: string;
+    };
+  }[];
+};

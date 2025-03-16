@@ -6,21 +6,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 import { useAbly } from "@/providers/AblyContext";
+import { useMutation } from "@tanstack/react-query";
 
 type Props = {
-  chats: Chats;
+  chats: Chats; // Assume this now includes unreadCount from the server
   userId: string;
 };
-
-interface UnreadMessages {
-  [chatId: string]: number;
-}
 
 export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
   const pathname = usePathname();
   const [chats, setChats] = useState(initialChats);
-  const [unreadMessages, setUnreadMessages] = useState<UnreadMessages>({});
   const { subscribe } = useAbly();
+
+  // New mutation for marking messages as read
+  const markAsReadMutation = useMutation({
+    mutationFn: (chatId: string) =>
+      fetch("/api/v1/message/read", {
+        method: "POST",
+        body: JSON.stringify({ chatId }),
+      }),
+  });
 
   useEffect(() => {
     const unsubscribe = subscribe(`chat:${userId}`, "message", (message) => {
@@ -40,6 +45,11 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
                   },
                   ...chat.messages,
                 ],
+                // Increment unread count if not the active chat and not from current user
+                unreadCount:
+                  pathname !== `/chat/${message.data.chatId}` && message.data.senderId !== userId
+                    ? (chat.unreadCount || 0) + 1
+                    : chat.unreadCount,
               }
             : chat
         );
@@ -52,13 +62,6 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
 
         return updatedChats;
       });
-
-      if (message.data.senderId !== userId && pathname !== `/chat/${message.data.chatId}`) {
-        setUnreadMessages((prev) => ({
-          ...prev,
-          [message.data.chatId]: (prev[message.data.chatId] || 0) + 1,
-        }));
-      }
     });
 
     return unsubscribe;
@@ -66,10 +69,15 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
 
   useEffect(() => {
     const currentChatId = pathname.split("/").pop();
-    if (currentChatId && unreadMessages[currentChatId]) {
-      setUnreadMessages((prev) => ({ ...prev, [currentChatId]: 0 }));
+    if (currentChatId && currentChatId.length > 0) {
+      const currentChat = chats.find((chat) => chat.id === currentChatId);
+
+      if (currentChat && currentChat.unreadCount > 0) {
+        markAsReadMutation.mutate(currentChatId);
+        setChats((prev) => prev.map((chat) => (chat.id === currentChatId ? { ...chat, unreadCount: 0 } : chat)));
+      }
     }
-  }, [pathname, unreadMessages]);
+  }, [pathname, chats]);
 
   return (
     <aside
@@ -83,7 +91,7 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
           key={index}
           chat={chat}
           userId={userId}
-          unreadCount={unreadMessages[chat.id] || 0}
+          unreadCount={chat.unreadCount || 0}
           isActive={pathname === `/chat/${chat.id}`}
         />
       ))}
@@ -143,7 +151,9 @@ const ChatLink = ({
         <div className="flex gap-2 justify-between items-center">
           <div className="text-primary-light line-clamp-1">{getLatestMessageContent()}</div>
           {unreadCount > 0 && !isActive && (
-            <div className="bg-accent text-white text-xs px-3 py-0.5 rounded-full">{unreadCount}</div>
+            <div className="bg-accent text-white text-xs px-3 py-0.5 rounded-full">
+              {unreadCount > 99 ? "99+" : unreadCount}
+            </div>
           )}
         </div>
       </div>

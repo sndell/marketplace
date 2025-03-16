@@ -1,10 +1,10 @@
-import { AblyProvider } from "@/providers/AblyContext";
+import { prisma } from "@/lib/prisma";
 import { Suspense } from "react";
 import { NotLoggedInMessage } from "@/features/auth";
 import { validateRequest } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { ChatSidebar, ChatSidebarSkeleton } from "@/features/chat";
+import { AblyProvider } from "@/providers/AblyContext";
 
 export const revalidate = 0;
 
@@ -69,7 +69,27 @@ const ChatSidebarWrapper = async ({ userId }: { userId: string }) => {
         orderBy: {
           createdAt: "desc",
         },
-        take: 1,
+        take: 99,
+      },
+      userReads: {
+        where: {
+          userId,
+        },
+        select: {
+          lastReadAt: true,
+        },
+      },
+      users: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              displayName: true,
+              photoUrl: true,
+              createdAt: true,
+            },
+          },
+        },
       },
     },
   });
@@ -85,7 +105,25 @@ const ChatSidebarWrapper = async ({ userId }: { userId: string }) => {
     );
   }
 
-  const sortedChats = chats.sort((a, b) => {
+  const updatedChats = chats.map((chat) => {
+    const lastReadAt = chat.userReads[0]?.lastReadAt || new Date(0);
+
+    const unreadCount = chat.messages.filter(
+      (message) => message.createdAt > lastReadAt && message.sender.id !== userId
+    ).length;
+
+    // Get the other user in the chat
+    const otherUser = chat.users.find((userChat) => userChat.userId !== userId)?.user;
+
+    return {
+      ...chat,
+      unreadCount,
+      otherUser,
+    };
+  });
+
+  // Sort chats by the latest message or creation date (in descending order)
+  const sortedChats = updatedChats.sort((a, b) => {
     const aTime = a.messages?.[0]?.createdAt.getTime() ?? a.createdAt.getTime();
     const bTime = b.messages?.[0]?.createdAt.getTime() ?? b.createdAt.getTime();
     return bTime - aTime;

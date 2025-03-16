@@ -9,7 +9,6 @@ export async function POST(req: NextRequest) {
 
   const data = await req.json();
   const { listingId } = newChatRequestSchema.parse(data);
-
   if (!listingId) return NextResponse.json({ error: "invalid-request", message: "Invalid data" }, { status: 400 });
 
   const listing = await prisma.listing.findFirst({ where: { id: listingId } });
