@@ -70,7 +70,7 @@ const ChatSidebarWrapper = async ({ userId }: { userId: string }) => {
         orderBy: {
           createdAt: "desc",
         },
-        take: 99,
+        take: 10,
       },
       userReads: {
         where: {

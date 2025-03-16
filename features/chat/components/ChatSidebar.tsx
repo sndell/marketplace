@@ -153,7 +153,7 @@ const ChatLink = ({
           <div className="text-primary-light line-clamp-1">{getLatestMessageContent()}</div>
           {unreadCount > 0 && !isActive && (
             <div className="bg-accent text-white text-xs px-3 py-0.5 rounded-full">
-              {unreadCount > 99 ? "99+" : unreadCount}
+              {unreadCount > 10 ? "10+" : unreadCount}
             </div>
           )}
         </div>
