@@ -73,7 +73,7 @@ export const Menu = ({
       >
         <div>
           {isLabelInner && label && (
-            <div className="text-sm text-primaryLight">
+            <div className="text-sm text-primary-light">
               {label}
               {isRequired && <span className="text-error">*</span>}
             </div>
@@ -100,7 +100,7 @@ export const Menu = ({
                   <div
                     onClick={() => handleClick(option.value)}
                     key={index}
-                    className="px-3 py-2 transition-colors hover:bg-secondaryDark text-start"
+                    className="px-3 py-2 transition-colors hover:bg-secondary-dark text-start"
                   >
                     {option.label}
                   </div>

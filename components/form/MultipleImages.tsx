@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useCallback, useState } from 'react';
-import Dropzone from 'react-dropzone';
-import { Control, FieldError, FieldErrorsImpl, Merge, useController } from 'react-hook-form';
-import { v4 as uuid } from 'uuid';
-import { useUploadImages } from '@/features/image';
-import { cn } from '@/util/cn';
-import { DndContext, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from '@dnd-kit/core';
-import { SortableContext, arrayMove, useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { ListingValues } from '@/features/listing/schema';
+import { useCallback, useState } from "react";
+import Dropzone from "react-dropzone";
+import { Control, FieldError, FieldErrorsImpl, Merge, useController } from "react-hook-form";
+import { v4 as uuid } from "uuid";
+import { useUploadImages } from "@/features/image";
+import { cn } from "@/util/cn";
+import { DndContext, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
+import { SortableContext, arrayMove, useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { ListingValues } from "@/features/listing/schema";
 
 type Props = {
   control: Control<ListingValues>;
@@ -27,7 +27,7 @@ export const MultipleImages = ({ control, description, error, isRequired, label,
   const {
     field: { value: images, onChange },
   } = useController({
-    name: 'images',
+    name: "images",
     control,
     defaultValue: [],
   });
@@ -37,7 +37,7 @@ export const MultipleImages = ({ control, description, error, isRequired, label,
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
       const newImages = acceptedFiles.map((file) => {
-        const extension = file.type.split('/')[1];
+        const extension = file.type.split("/")[1];
         return { file, id: uuid(), extension: `.${extension}` };
       });
 
@@ -86,7 +86,7 @@ export const MultipleImages = ({ control, description, error, isRequired, label,
             {isRequired && <span className="text-error">*</span>}
             {error && <span className="font-normal text-error"> {error.message}</span>}
           </div>
-          {description && <div className="text-sm text-primaryLight py-1">{description}</div>}
+          {description && <div className="text-sm text-primary-light py-1">{description}</div>}
         </div>
       )}
       <div className="grid grid-cols-2 gap-2">
@@ -104,9 +104,9 @@ export const MultipleImages = ({ control, description, error, isRequired, label,
               onDrop={onDrop}
               maxFiles={maxImages - images.length}
               accept={{
-                'image/png': ['.png'],
-                'image/jpeg': ['.jpg', '.jpeg'],
-                'image/webp': ['.webp'],
+                "image/png": [".png"],
+                "image/jpeg": [".jpg", ".jpeg"],
+                "image/webp": [".webp"],
               }}
               maxSize={20971520}
             >
@@ -114,14 +114,14 @@ export const MultipleImages = ({ control, description, error, isRequired, label,
                 <div
                   {...getRootProps()}
                   className={cn(
-                    'border cursor-pointer border-dashed rounded-xl flex px-2 flex-col items-center justify-center text-center gap-2 text-primaryLight',
-                    images.length === 0 && tempImages === 0 ? 'col-span-2 py-12' : 'aspect-square'
+                    "border cursor-pointer border-dashed rounded-xl flex px-2 flex-col items-center justify-center text-center gap-2 text-primary-light",
+                    images.length === 0 && tempImages === 0 ? "col-span-2 py-12" : "aspect-square"
                   )}
                 >
                   <input {...getInputProps()} />
                   <div className="icon-[solar--gallery-add-linear] text-3xl" />
-                  <p className="text-primaryLight max-xs:hidden">Släpp dina bilder här</p>
-                  <p className="text-primaryLight xs:hidden">Klicka för att välja bilder</p>
+                  <p className="text-primary-light max-xs:hidden">Släpp dina bilder här</p>
+                  <p className="text-primary-light xs:hidden">Klicka för att välja bilder</p>
                 </div>
               )}
             </Dropzone>
@@ -135,7 +135,7 @@ export const MultipleImages = ({ control, description, error, isRequired, label,
 const TempImage = () => (
   <div className="relative w-full overflow-hidden border rounded-xl border-secondary aspect-square">
     <div className="absolute inset-0 grid h-full place-items-center">
-      <span className="icon-[svg-spinners--ring-resize] text-2xl text-primaryLight" />
+      <span className="icon-[svg-spinners--ring-resize] text-2xl text-primary-light" />
     </div>
   </div>
 );

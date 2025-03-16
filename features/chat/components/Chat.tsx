@@ -99,12 +99,12 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
 };
 
 const ChatHeader = ({ otherUser }: { otherUser: ChatUser }) => (
-  <div className="absolute top-0 right-0 left-0 grid grid-cols-[1fr_auto] gap-2 mx-2 pt-2 bg-gradient-to-b md:from-white to-100%">
+  <div className="absolute top-0 right-0 left-0 grid grid-cols-[1fr_auto] gap-2 mx-2 pt-2 bg-linear-to-b md:from-white to-100%">
     <div className="flex flex-1 gap-2 items-center p-2 rounded-full backdrop-blur-md bg-primary/90">
       <Image src={otherUser.photoUrl} width={44} height={44} alt="other user" className="rounded-full aspect-square" />
       <div className="flex flex-col">
         <div className="text-primary">{otherUser.displayName}</div>
-        <div className="text-sm text-primaryLight">
+        <div className="text-sm text-primary-light">
           Medlem sedan:{" "}
           {otherUser.createdAt.toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" })}
         </div>
@@ -123,7 +123,7 @@ const MessageList = ({ messages, user }: { messages: Message[]; user: User }) =>
   <>
     {messages.map((message, index) => (
       <div key={index} className="space-y-1">
-        <div className={cn("text-xs text-primaryLight", message.senderId === user?.id && "text-end")}>
+        <div className={cn("text-xs text-primary-light", message.senderId === user?.id && "text-end")}>
           {message.createdAt.toLocaleDateString("en", {
             month: "short",
             day: "numeric",
@@ -157,14 +157,14 @@ const MessageInput = ({
   currentMessage: string;
   setCurrentMessage: (message: string) => void;
 }) => (
-  <div className="flex absolute right-0 bottom-0 left-0 gap-2 p-3 max-md:backdrop-blur-md max-md:bg-primary/90 bg-gradient-to-t md:from-white to-90%">
+  <div className="flex absolute right-0 bottom-0 left-0 gap-2 p-3 max-md:backdrop-blur-md max-md:bg-primary/90 bg-linear-to-t md:from-white to-90%">
     <input
       type="text"
       value={currentMessage}
       placeholder="Type a message..."
       onChange={(e) => setCurrentMessage(e.target.value)}
       onKeyDown={handleKeyPress}
-      className="flex-1 px-4 py-3 rounded-full appearance-none outline-none md:border md:border-secondary bg-background"
+      className="flex-1 px-4 py-3 rounded-full appearance-none outline-hidden md:border md:border-secondary bg-background"
     />
     <button
       onClick={handleSendMessage}

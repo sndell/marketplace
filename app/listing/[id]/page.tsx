@@ -30,10 +30,10 @@ export default async function Listing(props: { params: Promise<{ id: string }> }
         {/* Message Button */}
         <MessageButton listingId={listing.id} />
 
-        <div className="w-full h-[1px] bg-secondaryDark" />
+        <div className="w-full h-[1px] bg-secondary-dark" />
 
         {/* Description */}
-        <div className="whitespace-pre-wrap text-primaryLight break-all">{listing.description}</div>
+        <div className="whitespace-pre-wrap text-primary-light break-all">{listing.description}</div>
 
         {/* Location */}
         <span className="flex items-center gap-1 pt-1 text-accent">
@@ -41,7 +41,7 @@ export default async function Listing(props: { params: Promise<{ id: string }> }
           {getRegionLabelByValue(listing.region)}, {getMunicipalityLabelByValue(listing.municipality)}
         </span>
 
-        <div className="w-full h-[1px] bg-secondaryDark" />
+        <div className="w-full h-[1px] bg-secondary-dark" />
 
         {/* Creator Profile */}
         <div className="flex gap-2">
@@ -50,7 +50,7 @@ export default async function Listing(props: { params: Promise<{ id: string }> }
             <div className="flex gap-2">
               <span>{listing.creator.displayName}</span>
             </div>
-            <span className="text-sm text-primaryLight">Medlem sedan {listing.creator.memberSince}</span>
+            <span className="text-sm text-primary-light">Medlem sedan {listing.creator.memberSince}</span>
           </div>
         </div>
       </section>

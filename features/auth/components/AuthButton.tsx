@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { AuthModal } from './AuthModal';
-import { AnimatePresence } from 'framer-motion';
-import { useMutation } from '@tanstack/react-query';
-import Image from 'next/image';
-import { cn } from '@/util/cn';
-import { useCurrentUser } from '@/features/auth/hooks/useCurrentUser';
-import { useLogout } from '@/features/auth/hooks/useLogout';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { AuthModal } from "./AuthModal";
+import { AnimatePresence } from "framer-motion";
+import { useMutation } from "@tanstack/react-query";
+import Image from "next/image";
+import { cn } from "@/util/cn";
+import { useCurrentUser } from "@/features/auth/hooks/useCurrentUser";
+import { useLogout } from "@/features/auth/hooks/useLogout";
+import { useRouter } from "next/navigation";
 
 type Props = {
-  mode?: 'desktop' | 'mobile';
+  mode?: "desktop" | "mobile";
   children?: React.ReactNode;
 };
 
@@ -38,7 +38,7 @@ export const AuthButton = ({ mode, children }: Props) => {
   return (
     <>
       {(children && <button onClick={handleClick}>{children}</button>) ||
-        (mode === 'mobile' ? (
+        (mode === "mobile" ? (
           <button onClick={handleClick} className="flex items-center px-3 py-2 xs:hidden">
             {!user.data ? (
               <span className="icon-[solar--user-circle-linear] max-[380px]:text-2xl text-3xl" />
@@ -55,7 +55,7 @@ export const AuthButton = ({ mode, children }: Props) => {
         ) : (
           <button
             onClick={handleClick}
-            className={cn('grid max-xs:hidden rounded-xl bg-primaryDark place-items-center', !user.data && 'p-2')}
+            className={cn("grid max-xs:hidden rounded-xl bg-primary-dark place-items-center", !user.data && "p-2")}
           >
             {!user.data ? (
               <span className="text-2xl icon-[solar--user-rounded-linear]" />

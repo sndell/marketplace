@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
-const filters: string[] = ['Elektronik', 'Datorer', 'Stockholm', 'Södertälje', '500kr - 2700kr'];
+const filters: string[] = ["Elektronik", "Datorer", "Stockholm", "Södertälje", "500kr - 2700kr"];
 
 export const FilterButton = () => {
   const [visibleFilters, setVisibleFilters] = useState<string[]>([]);
@@ -32,8 +32,8 @@ export const FilterButton = () => {
       }
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -43,7 +43,7 @@ export const FilterButton = () => {
       </div>
       <div className="flex flex-col items-start">
         <div>Allting</div>
-        <div className="flex items-center gap-2 text-sm text-primaryLight whitespace-nowrap">
+        <div className="flex items-center gap-2 text-sm text-primary-light whitespace-nowrap">
           {visibleFilters.map((tag, index) => (
             <React.Fragment key={index}>
               <div className="">{tag}</div>

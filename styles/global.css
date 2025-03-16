@@ -1,0 +1,51 @@
+@import "tailwindcss";
+@plugin "@iconify/tailwind4";
+
+@theme inline {
+  --background-color-accent: #f36f5d;
+  --background-color-primary: #f6f2f1;
+  --background-color-primary-dark: #eee8e7;
+  --background-color-secondary: #f4f4f4;
+  --background-color-secondary-dark: #ece7e7;
+  --background-color-background: #ffffff;
+
+  --height-18: 4.5rem;
+  --width-18: 4.5rem;
+
+  --text-color-primary: #000000;
+  --text-color-primary-light: #646464;
+  --text-color-secondary: #ffffff;
+  --text-color-accent: #f36f5d;
+  --text-color-error: #ff3d23;
+
+  --border-color-primary: #ffffff;
+  --border-color-secondary: #e4e4e4;
+  --border-color-accent: #f36f5d;
+
+  --breakpoint-xs: 560px;
+
+  --padding-18: 4.5rem;
+
+  --text-3xl: 32px;
+}
+
+@utility scrollbar-slim {
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #88888886;
+    border-radius: 10px; /* Increase the value for more rounding */
+    border: 2px solid transparent; /* Optional: adds spacing around the thumb */
+    background-clip: padding-box; /* Ensures proper rendering */
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+}
