@@ -32,7 +32,7 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const { subscribe } = useAbly();
 
-  const mutation = useMutation({
+  const newMessageMutation = useMutation({
     mutationFn: (message: string) =>
       fetch("/api/v1/message/new", {
         method: "POST",
@@ -76,8 +76,8 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
   }, [messages, isLoaded]);
 
   const handleSendMessage = async () => {
-    if (!currentMessage.trim() || mutation.isPending) return;
-    mutation.mutate(currentMessage);
+    if (!currentMessage.trim() || newMessageMutation.isPending) return;
+    newMessageMutation.mutate(currentMessage);
     setCurrentMessage("");
   };
 
@@ -93,13 +93,13 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
       {!isLoaded && <ChatSkeleton />}
       <div
         className={cn(
-          "flex overflow-hidden relative flex-col w-full h-full max-md:absolute max-md:inset-0 max-md:z-50 max-md:bg-white",
+          "flex overflow-hidden relative flex-col w-full h-full max-md:absolute max-md:inset-0 max-md:h-dvh max-md:overflow-hidden max-md:z-50 max-md:bg-white",
           !isLoaded && "invisible w-0"
         )}
       >
         <div
           ref={chatContainerRef}
-          className="flex overflow-y-auto flex-col gap-2 p-2 pt-36 h-full scrollbar-slim pb-18"
+          className="flex flex-col h-full gap-2 p-2 overflow-y-auto pt-36 scrollbar-slim pb-18"
         >
           <ChatHeader otherUser={otherUser} />
           <MessageList messages={messages} user={user} />
@@ -118,7 +118,7 @@ export const Chat = ({ messages: serverMessages, user, otherUser, listing }: Pro
 
 const ChatHeader = ({ otherUser }: { otherUser: ChatUser }) => (
   <div className="absolute top-0 right-0 left-0 grid grid-cols-[1fr_auto] gap-2 mx-2 pt-2 bg-linear-to-b md:from-white to-100%">
-    <div className="flex flex-1 gap-2 items-center p-2 rounded-full backdrop-blur-xs bg-primary/90">
+    <div className="flex items-center flex-1 gap-2 p-2 rounded-full backdrop-blur-xs bg-primary/90">
       <Image src={otherUser.photoUrl} width={44} height={44} alt="other user" className="rounded-full aspect-square" />
       <div className="flex flex-col">
         <div className="text-primary">{otherUser.displayName}</div>
@@ -130,7 +130,7 @@ const ChatHeader = ({ otherUser }: { otherUser: ChatUser }) => (
     </div>
     <Link
       href="/chat"
-      className="grid place-content-center h-full rounded-full backdrop-blur-xl bg-background/10 aspect-square md:hidden"
+      className="grid h-full rounded-full place-content-center backdrop-blur-xl bg-background/50 aspect-square md:hidden"
     >
       <span className="icon-[clarity--close-line] text-4xl" />
     </Link>
@@ -141,7 +141,7 @@ const MessageList = ({ messages, user }: { messages: Message[]; user: User }) =>
   <>
     {messages.map((message, index) => (
       <div key={index} className="space-y-1">
-        <div className={cn("text-xs text-primary-light", message.senderId === user?.id && "text-end")}>
+        <div className={cn("text-xs text-primary-lighter", message.senderId === user?.id && "text-end")}>
           {message.createdAt.toLocaleDateString("en", {
             month: "short",
             day: "numeric",
@@ -150,7 +150,7 @@ const MessageList = ({ messages, user }: { messages: Message[]; user: User }) =>
           })}
           <div
             className={cn(
-              "px-2 py-2 rounded-2xl w-fit text-base break-words max-w-[80%]",
+              "px-2 py-2 rounded-2xl w-fit text-base break-words max-w-[80%] text-primary-light",
               message.senderId === user?.id
                 ? "ml-auto bg-accent text-secondary rounded-br-none"
                 : "bg-secondary rounded-bl-none"
@@ -187,7 +187,7 @@ const MessageInput = ({
     <button
       onClick={handleSendMessage}
       disabled={!currentMessage.trim()}
-      className="flex justify-center items-center px-2 h-12 rounded-full backdrop-blur-md aspect-square bg-accent disabled:bg-accent/50 disabled:cursor-not-allowed"
+      className="flex items-center justify-center h-12 px-2 rounded-full backdrop-blur-md aspect-square bg-accent disabled:bg-accent/50 disabled:cursor-not-allowed"
     >
       <span className="icon-[solar--plain-outline] text-secondary text-2xl h-full" />
     </button>

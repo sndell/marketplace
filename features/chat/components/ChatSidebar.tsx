@@ -82,7 +82,7 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
   return (
     <aside
       className={cn(
-        "w-full md:max-w-96 text-ellipsis overflow-y-auto scrollbar-slim whitespace-pre-wrap break-all flex flex-col p-2 border-r border-secondary",
+        "w-full md:max-w-96 text-ellipsis overflow-y-auto mt-16 scrollbar-slim whitespace-pre-wrap break-all flex flex-col p-2 border-r border-secondary",
         pathname.includes("/chat/") ? "max-md:hidden" : "block"
       )}
     >
@@ -131,7 +131,6 @@ const ChatLink = ({
   return (
     <Link
       href={`/chat/${chat.id}`}
-      prefetch={true}
       className={cn(
         "flex items-center gap-2 p-2 hover:bg-secondary rounded-lg transition-colors",
         isActive && "bg-secondary"
@@ -145,11 +144,11 @@ const ChatLink = ({
         height={56}
       />
       <div className="w-full">
-        <div className="flex gap-2 justify-between items-center">
+        <div className="flex items-center justify-between gap-2">
           <div className="line-clamp-1">{chat.listing.title}</div>
           <div className="flex-1 text-sm text-right whitespace-nowrap text-primary-light">{getLatestMessageTime()}</div>
         </div>
-        <div className="flex gap-2 justify-between items-center">
+        <div className="flex items-center justify-between gap-2">
           <div className="text-primary-light line-clamp-1">{getLatestMessageContent()}</div>
           {unreadCount > 0 && !isActive && (
             <div className="bg-accent text-white text-xs px-3 py-0.5 rounded-full">

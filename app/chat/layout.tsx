@@ -121,7 +121,6 @@ const ChatSidebarWrapper = async ({ userId }: { userId: string }) => {
     };
   });
 
-  // Sort chats by the latest message or creation date (in descending order)
   const sortedChats = updatedChats.sort((a, b) => {
     const aMessage = a.messages[0];
     const bMessage = b.messages[0];
