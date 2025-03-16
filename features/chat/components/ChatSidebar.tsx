@@ -65,49 +65,6 @@ export const ChatSidebar = ({ chats: initialChats, userId }: Props) => {
   }, [userId, subscribe, pathname]);
 
   useEffect(() => {
-    const unsubscribe = subscribe(`chat:${userId}`, "message", (message) => {
-      setChats((currentChats) => {
-        const updatedChats = currentChats.map((chat) =>
-          chat.id === message.data.chatId
-            ? {
-                ...chat,
-                messages: [
-                  {
-                    content: message.data.message,
-                    sender: {
-                      id: message.data.senderId,
-                      displayName: message.data.senderId === userId ? "Du" : message.data.senderDisplayName,
-                    },
-                    createdAt: new Date(message.timestamp),
-                  },
-                  ...chat.messages,
-                ],
-              }
-            : chat
-        );
-
-        const updatedChatIndex = updatedChats.findIndex((chat) => chat.id === message.data.chatId);
-        if (updatedChatIndex > -1) {
-          const [updatedChat] = updatedChats.splice(updatedChatIndex, 1);
-          updatedChats.unshift(updatedChat);
-        }
-
-        return updatedChats;
-      });
-
-      // Increment unread count if message is not from current user and chat is not active
-      if (message.data.senderId !== userId && pathname !== `/chat/${message.data.chatId}`) {
-        setUnreadMessages((prev) => ({
-          ...prev,
-          [message.data.chatId]: (prev[message.data.chatId] || 0) + 1,
-        }));
-      }
-    });
-
-    return unsubscribe;
-  }, [userId, subscribe, pathname]);
-
-  useEffect(() => {
     const currentChatId = pathname.split("/").pop();
     if (currentChatId && unreadMessages[currentChatId]) {
       setUnreadMessages((prev) => ({ ...prev, [currentChatId]: 0 }));
