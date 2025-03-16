@@ -38,6 +38,7 @@ const NavLink = ({ href, icon, label, path }: Link & { path: string }) => {
   return (
     <Link
       href={href}
+      prefetch={true}
       className={cn("relative flex items-center gap-2 rounded-full max-xs:px-3 max-xs:py-2 group whitespace-nowrap")}
     >
       <span

@@ -98,7 +98,7 @@ const ChatSidebarWrapper = async ({ userId }: { userId: string }) => {
     return (
       <div className="w-full">
         Du har inga aktiva chattar. När du kontaktar en säljare kommer chatten att visas här.
-        <Link href="/" className="font-medium text-accent">
+        <Link href="/" prefetch={true} className="font-medium text-accent">
           Visa annonser
         </Link>
       </div>
