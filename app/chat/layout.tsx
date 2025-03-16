@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ChatSidebar, ChatSidebarSkeleton } from "@/features/chat";
 import { AblyProvider } from "@/providers/AblyContext";
 
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 export default async function ChatLayout({
   children,
