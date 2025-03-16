@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String     @id @default(cuid())
+  email           String     @unique
+  displayName     String
+  photoUrl        String
+  isEmailVerified Boolean    @default(false)
+  password        String
+  createdAt       DateTime   @default(now())
+  sessions        Session[]
+  images          Image[]
+  listings        Listing[]
+  messages        Message[]
+  chats           UserChat[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model Image {
+  id           String         @id @default(cuid())
+  creatorId    String
+  url          String
+  createdAt    DateTime       @default(now())
+  deletedAt    DateTime?
+  user         User           @relation(fields: [creatorId], references: [id])
+  ListingImage ListingImage[]
+}
+
+model Listing {
+  id           String         @id @default(cuid())
+  title        String
+  description  String
+  price        Int
+  region       String
+  municipality String
+  mainCategory String
+  subcategory  String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  creatorId    String
+  creator      User           @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  ListingImage ListingImage[]
+  Chat         Chat[]
+}
+
+model ListingImage {
+  listingId String
+  imageId   String
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  image     Image   @relation(fields: [imageId], references: [id], onDelete: Cascade)
+
+  @@id([listingId, imageId])
+}
+
+model Chat {
+  id        String     @id @default(cuid())
+  listingId String
+  listing   Listing    @relation(fields: [listingId], references: [id])
+  messages  Message[]
+  createdAt DateTime   @default(now())
+  users     UserChat[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  chatId    String
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
+
+  @@index([chatId, createdAt])
+  @@index([senderId])
+}
+
+model UserChat {
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+
+  @@id([userId, chatId])
+}
