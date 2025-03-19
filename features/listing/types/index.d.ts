@@ -5,9 +5,7 @@ type Listings = {
   region: string;
   municipality: string;
   subcategory: string;
-  images: {
-    url: string;
-  }[];
+  images: ImageType[];
 }[];
 
 type Listing = {
@@ -28,4 +26,8 @@ type Listing = {
     photoURL: string;
     memberSince: string;
   };
+};
+
+type ImageType = {
+  url: string;
 };

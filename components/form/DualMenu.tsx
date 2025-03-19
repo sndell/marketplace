@@ -1,5 +1,6 @@
-import { Control, useController } from 'react-hook-form';
-import { Menu } from './Menu';
+import { Control, useController } from "react-hook-form";
+import { Menu } from "./Menu";
+import { useMemo } from "react";
 
 type Props = {
   control: Control<any>;
@@ -39,6 +40,8 @@ export const DualMenu = ({ control, first, second, label, isRequired = false, ma
     else if (second.error) return second.error.message;
   };
 
+  const secondOptions = useMemo(() => second.options.filter((sub) => sub.parent === value), [second.options, value]);
+
   return (
     <div className="flex flex-col gap-1">
       <div className="text-sm font-medium">
@@ -59,7 +62,7 @@ export const DualMenu = ({ control, first, second, label, isRequired = false, ma
         <Menu
           control={control}
           name={second.name}
-          options={second.options.filter((sub) => sub.parent === value) || []}
+          options={secondOptions}
           label={second.label}
           placeholder={second.placeholder}
           isDisabled={!value}

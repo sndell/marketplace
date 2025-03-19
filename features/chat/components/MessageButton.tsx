@@ -1,9 +1,10 @@
 "use client";
 
+import { cn } from "@/util/cn";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-type Props = { listingId: string };
+type Props = { listingId?: string };
 
 export const MessageButton = ({ listingId }: Props) => {
   const router = useRouter();
@@ -22,8 +23,12 @@ export const MessageButton = ({ listingId }: Props) => {
 
   return (
     <button
-      onClick={() => mutation.mutate(listingId)}
-      className="flex items-center justify-center w-full gap-4 py-3 text-white bg-accent rounded-xl"
+      onClick={() => mutation.mutate(listingId ?? "")}
+      className={cn(
+        "flex items-center justify-center w-full gap-4 py-3 text-white bg-accent rounded-xl",
+        !listingId && "opacity-50 cursor-not-allowed"
+      )}
+      disabled={!listingId}
     >
       {mutation.isPending ? (
         <span className="icon-[svg-spinners--3-dots-scale] text-2xl" />

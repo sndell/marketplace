@@ -18,10 +18,11 @@ export default async function Listing(props: { params: Promise<{ id: string }> }
   return (
     <main className="grid min-[816px]:grid-cols-[55%_auto] gap-3 p-3 mx-auto max-w-7xl">
       <ListingImages images={listing.images} />
-      <section className="space-y-4">
+      <section className="space-y-4 pt-2">
+        {/* Title */}
         <h1 className="text-3xl break-all hitespace-pre-wrap">{listing.title}</h1>
 
-        {/* Price Section */}
+        {/* Price */}
         <div>
           <div>Pris</div>
           <div className="text-2xl font-bold">{getPriceString(listing.price)}</div>
@@ -30,6 +31,7 @@ export default async function Listing(props: { params: Promise<{ id: string }> }
         {/* Message Button */}
         <MessageButton listingId={listing.id} />
 
+        {/* Divider */}
         <div className="w-full h-[1px] bg-secondary-dark" />
 
         {/* Description */}
@@ -41,6 +43,7 @@ export default async function Listing(props: { params: Promise<{ id: string }> }
           {getRegionLabelByValue(listing.region)}, {getMunicipalityLabelByValue(listing.municipality)}
         </span>
 
+        {/* Divider */}
         <div className="w-full h-[1px] bg-secondary-dark" />
 
         {/* Creator Profile */}

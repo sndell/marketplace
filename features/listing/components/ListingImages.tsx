@@ -5,12 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-type ImageType = {
-  url: string;
-};
-
 type ListingImagesProps = {
   images: ImageType[];
+  isPreview?: boolean;
 };
 
 const ImageNavigationButton = ({
@@ -87,13 +84,13 @@ const ThumbnailImage = ({
   </button>
 );
 
-export const ListingImages = ({ images }: ListingImagesProps) => {
+export const ListingImages = ({ images, isPreview = false }: ListingImagesProps) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = isFullscreen ? "hidden" : "auto";
+    document.body.style.overflow = isFullscreen ? "hidden" : isPreview ? "auto" : "hidden";
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -108,6 +105,14 @@ export const ListingImages = ({ images }: ListingImagesProps) => {
     e.stopPropagation();
     setSelectedImageIndex((prevIndex) => (prevIndex === images.length - 1 ? 0 : prevIndex + 1));
   };
+
+  if (images.length === 0)
+    return (
+      <div className="flex flex-col items-center justify-center gap-2 rounded-lg bg-primary aspect-16/10">
+        <div className="icon-[solar--camera-linear] text-primary/80 text-4xl" />
+        Inga bilder tillgängliga
+      </div>
+    );
 
   return (
     <div className={cn("flex flex-col space-y-2", isFullscreen && "fixed h-dvh flex inset-0 flex-col bg-black z-50")}>
@@ -138,14 +143,14 @@ export const ListingImages = ({ images }: ListingImagesProps) => {
           style={{ transform: `translateX(-${selectedImageIndex * 100}%)` }}
         >
           {images.map((image, index) => (
-            <div key={index} className="shrink-0 w-full h-full">
+            <div key={index} className="w-full h-full shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={image.url} alt={`Photo ${index + 1}`} className="object-contain absolute z-10 w-full h-full" />
+              <img src={image.url} alt={`Photo ${index + 1}`} className="absolute z-10 object-contain w-full h-full" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={image.url}
                 alt={`Background ${index + 1}`}
-                className="object-cover blur-2xl w-full h-full inset-0 bg-secondary-dark opacity-40"
+                className="inset-0 object-cover w-full h-full blur-2xl bg-secondary-dark opacity-40"
               />
             </div>
           ))}
@@ -153,7 +158,7 @@ export const ListingImages = ({ images }: ListingImagesProps) => {
       </div>
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className={cn("flex flex-wrap gap-2 pb-2", isFullscreen ? "w-full justify-center" : "w-fit")}>
+        <div className={cn("flex flex-wrap gap-2", isFullscreen ? "w-full justify-center" : "w-fit")}>
           {images.map((image, index) => (
             <ThumbnailImage
               key={index}
