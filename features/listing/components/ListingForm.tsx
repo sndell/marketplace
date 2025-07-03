@@ -11,6 +11,7 @@ import { useNewListing } from "../hooks/useNewListing";
 import { useRouter } from "next/navigation";
 import { ListingPreview } from "./ListingPreview";
 import { useState } from "react";
+
 export const ListingForm = () => {
   const newListing = useNewListing();
   const router = useRouter();

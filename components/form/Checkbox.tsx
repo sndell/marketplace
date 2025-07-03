@@ -17,6 +17,7 @@ export const Checkbox = ({ registation, error, label }: Props) => {
             {...registation}
             className="peer border border-secondary w-full absolute h-full appearance-none bg-secondary cursor-pointer rounded-[4px] checked:bg-accent"
           />
+
           <span className="aboslute icon-[clarity--check-line] text-sm hidden peer-checked:block text-white" />
         </div>
         {label}

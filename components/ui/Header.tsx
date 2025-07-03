@@ -9,7 +9,7 @@ export const Header = () => (
       <Navbar />
       <div className="flex gap-2 justify-self-end">
         <AuthButton mode="desktop" />
-        <button className="grid p-3 border rounded-full md:rounded-xl xs:p-2 xs:bg-primary-dark place-items-center backdrop-blur-xl bg-background/50 border-secondary/10">
+        <button className="grid p-3 border rounded-full md:rounded-xl xs:p-2 xs:bg-primary-dark place-items-center backdrop-blur-xl bg-background/80 border-secondary/10">
           <span className="text-4xl xs:text-2xl icon-[solar--hamburger-menu-linear]" />
         </button>
       </div>

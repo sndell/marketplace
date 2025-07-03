@@ -6,8 +6,8 @@
   --background-color-accent-light: #ce6658;
   --background-color-primary: #f6f2f1;
   --background-color-primary-dark: #eee8e7;
-  --background-color-secondary: #f4f4f4;
-  --background-color-secondary-dark: #ece7e7;
+  --background-color-secondary: #eeeeee;
+  --background-color-secondary-dark: #dfd9d9;
   --background-color-background: #ffffff;
 
   --height-18: 4.5rem;
@@ -21,11 +21,11 @@
   --text-color-error: #ff3d23;
 
   --border-color-primary: #ffffff;
-  --border-color-secondary: #e4e4e4;
-  --border-color-accent: #ce6658;
+  --border-color-secondary: #eeeeee;
+  --border-color-accent: rgb(223, 105, 92);
 
   --divide-color-primary: #ffffff;
-  --divide-color-secondary: #e4e4e4;
+  --divide-color-secondary: #eeeeee;
   --divide-color-accent: #b84f40;
 
   --breakpoint-xs: 560px;
